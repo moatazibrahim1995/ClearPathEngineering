@@ -1,478 +1,493 @@
-import React, { useMemo, useState } from "react";
-import { motion } from "framer-motion";
-import { Check, Clock, ShieldCheck, Package, ClipboardCheck, Factory, Wrench, Rocket, Phone, Calendar, DollarSign, Sparkles, Timer, Gauge, FileCheck2, Zap, BadgeCheck, ListChecks, Workflow, Layers, Shield, FileText, Users, Cpu, Boxes, CreditCard, ExternalLink, ArrowRight, ArrowUpRight } from "lucide-react";
+<!doctype html>
 
-// shadcn/ui components
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Clear Path Engineering — Proto‑Ready Sprint</title>
+  <meta name="description" content="Vendor‑ready CAD, drawings, BOM, and 3 quotes in one focused sprint. 14/21/28‑day lanes for first‑time founders and SMEs."/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/3.0.1/modern-normalize.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+  <style>
+    :root{
+      --bg: #0b1520;
+      --card: #0f1d2a;
+      --text: #e6eef6;
+      --muted: #9fb3c8;
+      --accent: #ffcc33;
+      --accent-ink: #241a00;
+      --link: #7ec8ff;
+      --ink: #0f1720;
+      --ink-2: #374151;
+      --ink-3: #6b7280;
+      --maxw: 1120px; --radius: 16px; --shadow: 0 10px 30px rgba(0,0,0,.15); --pad: clamp(16px, 2vw, 24px);
+    }
+    html, body { height: 100%; background: #fff; color: var(--ink); }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji"; line-height: 1.5; letter-spacing: 0.2px; }
+    a { color: #0ea5e9; text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
-// === Config ===
-const START_DATE = "Mon, Sept 8, 2025"; // adjust as needed
-const CLOSES = "Thu, Sept 4, 2025 @ 5pm ET"; // adjust as needed
-const SLOTS = 6; // cohort capacity
+```
+/* Layout */
+.container { width: min(100%, var(--maxw)); margin: 0 auto; padding: 0 var(--pad); }
+header { position: sticky; top: 0; background: rgba(255,255,255,.85); backdrop-filter: saturate(120%) blur(6px); border-bottom: 1px solid #e5e7eb; z-index: 50; }
+.nav { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; }
+.brand { display: flex; gap: 12px; align-items: center; font-weight: 700; }
+.brand img { height: 28px; width: 28px; }
+.nav-links { display: flex; gap: 18px; align-items: center; }
+.nav-links a { color: var(--ink-2); font-weight: 600; }
+.badge { display:inline-flex; align-items:center; gap:6px; font-weight:700; padding:6px 10px; border-radius: 999px; border:1px solid #e5e7eb; background:#f8fafc; color:#0f1720; font-size:12px; }
+.badge.sky { background:#0369a1; color:white; border-color:transparent; }
+.nav-cta { background: var(--accent); color: var(--accent-ink); padding: 10px 14px; border-radius: 999px; font-weight: 800; border: 0; box-shadow: var(--shadow); }
+.nav-cta:hover { filter: brightness(1.05); text-decoration: none; }
+.nav-toggle { display:none; border:1px solid #d1d5db; background:white; padding:8px 10px; border-radius:10px; }
+@media (max-width: 820px){
+  .nav-links { display:none; position:absolute; left:0; right:0; top:62px; background:white; border-bottom:1px solid #e5e7eb; padding:12px 16px; }
+  .nav-links.open { display:grid; gap:12px; }
+  .nav-toggle { display:inline-flex; }
+}
 
-const BOOKING_LINK = "mailto:moataz@clearpathengineering.ca?subject=Book%20Intro%20Call%20(Proto-Ready%20Sprint)&body=Hi%20Moataz%2C%20I%27d%20like%20to%20book%20a%2010-minute%20intro%20call%20about%20the%20Proto-Ready%20Sprint."; // replace with Calendly when ready
-const REALITY_CHECK_LINK = "mailto:moataz@clearpathengineering.ca?subject=Buy%2072-Hour%20Reality%20Check%20($895)&body=Hi%20Moataz%2C%20I%27d%20like%20to%20buy%20the%2072-Hour%20Reality%20Check."; // replace with checkout when ready
-// Assets: place these files in /public/assets for GitHub Pages or Next.js
-const LOGO_SRC = "/assets/IconOnly_Transparent_NoBuffer.png"; // Clear Path logo
-const ENS_LOGO_SRC = "/assets/Engineers_NS_white.png"; // Engineers Nova Scotia (white)
+/* Utilities */
+.pill { display:inline-block; font-size:12px; color:#334155; border:1px solid #e5e7eb; padding:6px 10px; border-radius:999px; }
+.btn { display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius:12px; font-weight:800; border:1px solid #e5e7eb; background:white; color:#0f1720; }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: transparent; }
+.btn.ghost { background: transparent; }
+.btn.block { justify-content:center; width:100%; }
+.card { background:white; border:1px solid #e5e7eb; border-radius:16px; box-shadow: var(--shadow); }
+.muted { color: var(--ink-3); }
+.grid { display:grid; }
 
-export default function ClearPathProtoReady() {
-  const [slotsLeft, setSlotsLeft] = useState<number>(SLOTS);
+/* Hero */
+.hero { padding: clamp(48px, 6vw, 96px) 0; }
+.hero-grid { display:grid; grid-template-columns: 1.2fr 1fr; gap: clamp(24px, 4vw, 48px); align-items:center; }
+.hero h1 { font-size: clamp(28px, 4.2vw, 48px); line-height:1.1; margin: 0 0 12px; }
+.kpi { display:grid; grid-template-columns: repeat(3,1fr); gap:12px; margin-top:12px; }
+.kpi .item { padding:14px; background:#f8fafc; border:1px solid #e5e7eb; border-radius:12px; text-align:center; }
+@media (max-width: 920px){ .hero-grid{ grid-template-columns: 1fr; } }
 
-  // Scope Gate form state
-  const [partCount, setPartCount] = useState<string>("");
-  const [process, setProcess] = useState<string>("");
-  const [electronics, setElectronics] = useState<string>("");
-  const [tolerance, setTolerance] = useState<string>("");
-  const [deadline, setDeadline] = useState<string>("");
+/* Trust strip */
+.trust { display:grid; grid-template-columns: repeat(4,1fr); gap:16px; margin-top: 12px; }
+.trust img { height: 36px; width: auto; filter: grayscale(100%) brightness(1.1); opacity:.9; }
+@media (max-width: 820px){ .trust{ grid-template-columns: repeat(2,1fr); } }
 
-  const recommendedLane = useMemo(() => {
-    const parts = parseInt(partCount || "0", 10);
-    const tight = tolerance === "tight";
-    const greenProcesses = ["cnc", "sheet", "fdm", "sla", "sls", "jig"];
-    const isGreenProc = greenProcesses.includes(process);
-    const offTheShelf = electronics === "off";
+/* Sections */
+.section { padding: clamp(40px, 6vw, 80px) 0; }
+.section h2 { font-size: clamp(22px, 3.2vw, 34px); margin: 0 0 8px; }
+.section p.sub { color: var(--ink-3); margin: 0 0 22px; }
 
-    if (parts > 0 && parts <= 10 && isGreenProc && !tight && offTheShelf) return "14-Day";
-    if (parts > 0 && parts <= 25) return "21-Day";
-    if (parts > 25 || tight || (!offTheShelf && electronics !== "")) return "28-Day";
-    return "—";
-  }, [partCount, process, electronics, tolerance]);
+/* Features / Offers */
+.features { display:grid; grid-template-columns: repeat(3,1fr); gap:16px; }
+.feature { padding:18px; }
+@media (max-width: 960px){ .features { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 640px){ .features { grid-template-columns: 1fr; } }
 
-  return (
-    <main className="min-h-screen bg-white text-zinc-900">
-      {/* Top bar */}
-      <div className="sticky top-0 z-40 border-b bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
-        <div className="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2 font-semibold">
-            <img src={LOGO_SRC} alt="Clear Path Engineering" className="h-6 w-6" />
-            <span>Clear Path Engineering</span>
-            <Badge className="ml-2 bg-sky-600 text-white">Proto-Ready Sprint</Badge>
+.offers { display:grid; grid-template-columns: repeat(3,1fr); gap:16px; }
+.offer { padding:18px; display:grid; gap:12px; }
+.offer .price { font-size:22px; font-weight:900; color:#b45309; }
+.offer ul { margin:0; padding-left: 18px; color: var(--ink-3); }
+@media (max-width: 960px){ .offers { grid-template-columns: 1fr; } }
+
+/* Tabs */
+.tabs { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+.tab { border:1px solid #e5e7eb; background:#f8fafc; color:#0f1720; padding:8px 12px; border-radius:12px; cursor:pointer; font-weight:700; }
+.tab.active { background:#0ea5e9; color:white; border-color:transparent; }
+.tabpanel { display:none; margin-top:16px; }
+.tabpanel.active { display:block; }
+
+/* Accordion */
+.acc { border-top:1px solid #e5e7eb; }
+.acc-item { border-bottom:1px solid #e5e7eb; }
+.acc-btn { width:100%; text-align:left; padding:14px; background:white; border:0; font-weight:700; cursor:pointer; }
+.acc-content { display:none; padding:0 14px 14px; color:var(--ink-2); }
+.acc-item.open .acc-content { display:block; }
+
+/* Footer */
+footer { background:#0b1520; color:#cbd5e1; }
+.foot { padding: 22px 0 40px; }
+```
+
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <img src="assets/IconOnly_Transparent_NoBuffer.png" alt="Clear Path Engineering" />
+        <span>Clear Path Engineering</span>
+        <span class="badge sky">Proto‑Ready Sprint</span>
+      </div>
+      <button class="nav-toggle" aria-label="Toggle navigation" onclick="document.querySelector('.nav-links').classList.toggle('open')">Menu</button>
+      <nav class="nav-links">
+        <a href="#why">Why Us</a>
+        <a href="#offer">Offer</a>
+        <a href="#scope">Scope Gate</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#contact" class="nav-cta">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="pill">P.Eng • CAD • DFM • Startup‑friendly</span>
+          <h1>Proto‑Ready in <span style="text-decoration:underline; text-decoration-thickness:4px; text-decoration-color: var(--accent); text-underline-offset:6px;">14 Days</span></h1>
+          <p class="muted">Vendor‑approved CAD, drawings, BOM, and <strong>3 shop quotes — guaranteed</strong>. One focused sprint to move from idea/CAD to execution without the guesswork.</p>
+          <div class="grid" style="grid-auto-flow: column; grid-auto-columns: max-content; gap:12px; justify-content:start; flex-wrap:wrap; margin-top:12px;">
+            <a class="btn primary" href="mailto:moataz@clearpathengineering.ca?subject=Book%20Intro%20Call%20(Proto-Ready%20Sprint)" target="_blank" rel="noreferrer">Book 10‑min Intro ▸</a>
+            <a class="btn" href="mailto:moataz@clearpathengineering.ca?subject=Buy%2072-Hour%20Reality%20Check%20($895)" target="_blank" rel="noreferrer">Buy 72‑Hour Reality Check ($895)</a>
           </div>
-          <div className="flex items-center gap-3">
-            <Badge variant="outline" className="hidden sm:inline-flex"><Calendar className="mr-1 h-4 w-4" /> Starts {START_DATE}</Badge>
-            <Badge variant="outline" className="hidden sm:inline-flex"><Timer className="mr-1 h-4 w-4" /> Enrollment closes {CLOSES}</Badge>
-            <Badge className="hidden sm:inline-flex bg-sky-600 text-white"><Gauge className="mr-1 h-4 w-4" /> {slotsLeft}/{SLOTS} slots left</Badge>
-            <Button asChild className="rounded-2xl">
-              <a href={BOOKING_LINK} target="_blank" rel="noreferrer">
-                Book 10‑min Intro <ArrowUpRight className="ml-2 h-4 w-4" />
-              </a>
-            </Button>
+          <div class="muted" style="margin-top:8px; font-size:14px; display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+            <span>🛡️ On‑time or we work free + $500 prototype credit</span><span>•</span>
+            <span>🗓️ Starts Mon, Sept 8, 2025</span><span>•</span>
+            <span>⏱️ Enrollment closes Thu, Sept 4, 2025 @ 5pm ET</span>
+          </div>
+          <div class="kpi">
+            <div class="item"><strong>72‑hr</strong><br><small>reality check</small></div>
+            <div class="item"><strong>DFM‑first</strong><br><small>sheet metal, plastics</small></div>
+            <div class="item"><strong>Startup‑ready</strong><br><small>simple pricing</small></div>
+          </div>
+        </div>
+        <div class="card" style="padding:16px;">
+          <h3 style="margin:0 0 6px;">Receipts, not rhetoric</h3>
+          <p class="muted" style="margin:0 0 12px;">Blurred artifacts from recent sprints</p>
+          <div class="grid" style="grid-template-columns:repeat(2,1fr); gap:12px;">
+            <div class="card" style="height:112px; background:linear-gradient(135deg,#f3f4f6,#e5e7eb); display:flex; justify-content:center; align-items:center; font-size:12px; color:#6b7280;">Redline (before → after)</div>
+            <div class="card" style="height:112px; background:linear-gradient(135deg,#f3f4f6,#e5e7eb); display:flex; justify-content:center; align-items:center; font-size:12px; color:#6b7280;">Quote email (timestamp)</div>
+            <div class="card" style="height:112px; background:linear-gradient(135deg,#f3f4f6,#e5e7eb); display:flex; justify-content:center; align-items:center; font-size:12px; color:#6b7280;">14‑Day tracker</div>
+            <div class="card" style="height:112px; background:linear-gradient(135deg,#f3f4f6,#e5e7eb); display:flex; justify-content:center; align-items:center; font-size:12px; color:#6b7280;">BOM snapshot</div>
           </div>
         </div>
       </div>
+    </section>
 
-      {/* Hero */}
-      <section className="mx-auto max-w-7xl px-4 py-12">
-        <div className="grid items-center gap-8 md:grid-cols-2">
-          <motion.div initial={{opacity:0, y:10}} animate={{opacity:1, y:0}} transition={{duration:0.5}}>
-            <Badge className="mb-3" variant="secondary">
-              <Sparkles className="mr-1 h-4 w-4" /> Category‑of‑One Offer
-            </Badge>
-            <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight leading-tight">
-              Proto‑Ready in <span className="underline decoration-amber-400 decoration-4 underline-offset-4">14 Days</span>
-            </h1>
-            <p className="mt-4 text-lg text-zinc-700">
-              Vendor‑approved CAD, drawings, BOM, and <span className="font-semibold">3 shop quotes—guaranteed</span>. One focused sprint to move from idea/CAD to execution without the guesswork.
-            </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Button size="lg" asChild className="rounded-2xl shadow-lg">
-                <a href={BOOKING_LINK} target="_blank" rel="noreferrer"><Phone className="mr-2 h-5 w-5"/> Book 10‑min Intro</a>
-              </Button>
-              <Button size="lg" variant="outline" asChild className="rounded-2xl">
-                <a href={REALITY_CHECK_LINK} target="_blank" rel="noreferrer"><ClipboardCheck className="mr-2 h-5 w-5"/> Buy 72‑Hour Reality Check ($895)</a>
-              </Button>
-            </div>
-            <div className="mt-4 flex flex-wrap items-center gap-2 text-sm text-zinc-600">
-              <ShieldCheck className="h-4 w-4" /> <span>On‑time or we work free + $500 prototype credit</span>
-              <span className="mx-1">•</span>
-              <Clock className="h-4 w-4" /> <span>Starts {START_DATE}</span>
-              <span className="mx-1">•</span>
-              <Timer className="h-4 w-4" /> <span>Enrollment closes {CLOSES}</span>
-            </div>
-          </motion.div>
-
-          {/* Proof / artifacts placeholder */}
-          <motion.div initial={{opacity:0, y:10}} animate={{opacity:1, y:0}} transition={{duration:0.6, delay:0.1}}>
-            <Card className="rounded-2xl shadow-xl">
-              <CardHeader className="pb-2">
-                <CardTitle className="flex items-center gap-2"><FileCheck2 className="h-5 w-5"/> Receipts, not rhetoric</CardTitle>
-                <CardDescription>Blurred artifacts from recent sprints</CardDescription>
-              </CardHeader>
-              <CardContent className="grid grid-cols-2 gap-3">
-                <div className="h-28 rounded-xl bg-gradient-to-br from-zinc-100 to-zinc-200 flex items-center justify-center text-xs text-zinc-500">Redline (before → after)</div>
-                <div className="h-28 rounded-xl bg-gradient-to-br from-zinc-100 to-zinc-200 flex items-center justify-center text-xs text-zinc-500">Quote email (timestamp)</div>
-                <div className="h-28 rounded-xl bg-gradient-to-br from-zinc-100 to-zinc-200 flex items-center justify-center text-xs text-zinc-500">14‑Day tracker</div>
-                <div className="h-28 rounded-xl bg-gradient-to-br from-zinc-100 to-zinc-200 flex items-center justify-center text-xs text-zinc-500">BOM snapshot</div>
-              </CardContent>
-              <CardFooter className="text-xs text-zinc-500">Upload your real artifacts here for max trust.</CardFooter>
-            </Card>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Offer Stack */}
-      <section className="bg-zinc-50 py-12">
-        <div className="mx-auto max-w-7xl px-4">
-          <div className="mb-6 flex items-center gap-3">
-            <Badge variant="outline" className="rounded-2xl"><ListChecks className="mr-1 h-4 w-4"/> Offer Stack</Badge>
-            <h2 className="text-2xl font-bold">What you walk away with</h2>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              { icon: Package, title: "DFM‑optimized CAD + drawings (GD&T)", desc: "Reduce scrap & rework risk with manufacturable geometry."},
-              { icon: Gauge, title: "Tolerance stack‑up (critical dims)", desc: "Objective fit & function targets for your chosen process."},
-              { icon: FileText, title: "Release files", desc: "STEP, STL, PDF drawings — rev‑controlled and vendor ready."},
-              { icon: Layers, title: "BOM with alternates", desc: "Materials, finish, fasteners + swap options for cost/lead time."},
-              { icon: Factory, title: "Vendor‑Ready Kit", desc: "RFQ template + 3 qualified quotes (price & lead time) handed off."},
-              { icon: Shield, title: "Risk register + test plan", desc: "Top 10 failure modes + mitigations for first proto."},
-              { icon: Users, title: "30 days async support", desc: "Slack/WhatsApp ≤ 48h SLA to keep momentum post‑handoff."},
-            ].map((item, i) => (
-              <Card key={i} className="rounded-2xl shadow-sm">
-                <CardHeader className="pb-2">
-                  <CardTitle className="flex items-center gap-2 text-base"><item.icon className="h-5 w-5"/>{item.title}</CardTitle>
-                  <CardDescription>{item.desc}</CardDescription>
-                </CardHeader>
-              </Card>
-            ))}
-          </div>
-
-          <div className="mt-8 grid gap-4 md:grid-cols-3">
-            <Card className="rounded-2xl">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2"><ShieldCheck className="h-5 w-5"/> Performance Guarantee</CardTitle>
-                <CardDescription>On‑time or we work free + $500 credit</CardDescription>
-              </CardHeader>
-              <CardContent className="text-sm text-zinc-700">
-                If we miss the delivery window or the 3‑quote handoff, we continue free until acceptance and issue a $500 prototype credit.
-              </CardContent>
-            </Card>
-            <Card className="rounded-2xl">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2"><BadgeCheck className="h-5 w-5"/> Acceptance Criteria</CardTitle>
-              </CardHeader>
-              <CardContent className="text-sm text-zinc-700 space-y-2">
-                <p className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4"/> DFM checklist passed; drawings complete with GD&T</p>
-                <p className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4"/> BOM complete with alternates</p>
-                <p className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4"/> 3 qualified vendor quotes (price + lead time)</p>
-                <p className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4"/> Founder sign‑off</p>
-              </CardContent>
-            </Card>
-            <Card className="rounded-2xl">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2"><Workflow className="h-5 w-5"/> How it runs</CardTitle>
-              </CardHeader>
-              <CardContent className="text-sm text-zinc-700 space-y-2">
-                <p className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4"/> Day 0: Intake + files + Slack</p>
-                <p className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4"/> Day 3: 72‑Hour Reality Check</p>
-                <p className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4"/> Day 7: mid‑sprint checkpoint</p>
-                <p className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4"/> Day 14: vendor handoff + quotes</p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Scope Gate */}
-      <section className="mx-auto max-w-7xl px-4 py-12">
-        <div className="mb-6 flex items-center gap-3">
-          <Badge variant="outline" className="rounded-2xl"><Wrench className="mr-1 h-4 w-4"/> Scope Gate</Badge>
-          <h2 className="text-2xl font-bold">Pick your lane (we’ll confirm on the call)</h2>
-        </div>
-        <Tabs defaultValue="14" className="">
-          <TabsList className="rounded-2xl">
-            <TabsTrigger value="14">14‑Day</TabsTrigger>
-            <TabsTrigger value="21">21‑Day</TabsTrigger>
-            <TabsTrigger value="28">28‑Day</TabsTrigger>
-          </TabsList>
-          <TabsContent value="14" className="mt-6">
-            <LaneCard days={14} title="Green Lane" bullets={["≤10 parts (single/small assembly)", "CNC / Sheet / FDM/SLA/SLS / simple jigs", "Standard tolerances (e.g., CNC ≥ ±0.05–0.10 mm)", "Off‑the‑shelf electronics", "No regulated compliance"]} />
-          </TabsContent>
-          <TabsContent value="21" className="mt-6">
-            <LaneCard days={21} title="Yellow Lane" bullets={["11–25 parts; simple mechanisms", "Mixed processes; soft tooling advisory", "Some tight features (≥ ±0.025–0.05 mm)", "Quotes on agreed processes"]} />
-          </TabsContent>
-          <TabsContent value="28" className="mt-6">
-            <LaneCard days={28} title="Red Lane" bullets={[">25 parts or complex mechanisms", "Injection‑mold‑ready DFM / complex surfacing", "Tight assemblies / regulated categories", "Milestone plan: Design → DFM → Vendor Handoff"]} />
-          </TabsContent>
-        </Tabs>
-
-        {/* Quick Scope Checker */}
-        <Card className="mt-8 rounded-2xl">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2"><ListChecks className="h-5 w-5"/> Quick scope checker</CardTitle>
-            <CardDescription>Answer 5 questions to see your likely lane. We’ll finalize on the intro call.</CardDescription>
-          </CardHeader>
-          <CardContent className="grid gap-4 md:grid-cols-5">
-            <div className="space-y-2">
-              <Label htmlFor="parts">Estimated part count</Label>
-              <Input id="parts" type="number" min={1} placeholder="e.g., 6" value={partCount} onChange={(e)=>setPartCount(e.target.value)} />
-            </div>
-            <div className="space-y-2">
-              <Label>Primary process</Label>
-              <Select value={process} onValueChange={setProcess}>
-                <SelectTrigger><SelectValue placeholder="Select"/></SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="cnc">CNC machining</SelectItem>
-                  <SelectItem value="sheet">Sheet metal</SelectItem>
-                  <SelectItem value="fdm">3D print (FDM)</SelectItem>
-                  <SelectItem value="sla">3D print (SLA)</SelectItem>
-                  <SelectItem value="sls">3D print (SLS)</SelectItem>
-                  <SelectItem value="jig">Simple jig/fixture</SelectItem>
-                  <SelectItem value="mold">Injection molding (production)</SelectItem>
-                  <SelectItem value="other">Other / mixed</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label>Electronics</Label>
-              <Select value={electronics} onValueChange={setElectronics}>
-                <SelectTrigger><SelectValue placeholder="Select"/></SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="off">Off‑the‑shelf only</SelectItem>
-                  <SelectItem value="custom">Custom PCB / complex integration</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label>Tolerance level</Label>
-              <Select value={tolerance} onValueChange={setTolerance}>
-                <SelectTrigger><SelectValue placeholder="Select"/></SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="rough">Rough</SelectItem>
-                  <SelectItem value="standard">Standard</SelectItem>
-                  <SelectItem value="tight">Tight</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="deadline">Target deadline</Label>
-              <Input id="deadline" type="date" value={deadline} onChange={(e)=>setDeadline(e.target.value)} />
-            </div>
-          </CardContent>
-          <CardFooter className="flex items-center justify-between gap-3 flex-wrap">
-            <div className="text-sm text-zinc-700 flex items-center gap-2">
-              <Badge variant="secondary" className="rounded-2xl"><Zap className="mr-1 h-4 w-4"/> Recommended: {recommendedLane}</Badge>
-              <Separator orientation="vertical" className="h-5"/>
-              <span className="text-zinc-500">We’ll confirm scope & acceptance criteria on the call.</span>
-            </div>
-            <div className="flex gap-3">
-              <Button asChild className="rounded-2xl">
-                <a href={BOOKING_LINK} target="_blank" rel="noreferrer"><Calendar className="mr-2 h-4 w-4"/> Book Intro</a>
-              </Button>
-              <Button variant="outline" asChild className="rounded-2xl">
-                <a href={REALITY_CHECK_LINK} target="_blank" rel="noreferrer"><CreditCard className="mr-2 h-4 w-4"/> Buy Reality Check ($895)</a>
-              </Button>
-            </div>
-          </CardFooter>
-        </Card>
-      </section>
-
-      {/* Pricing & Terms */}
-      <section className="bg-zinc-50 py-12">
-        <div className="mx-auto max-w-7xl px-4">
-          <div className="mb-6 flex items-center gap-3">
-            <Badge variant="outline" className="rounded-2xl"><DollarSign className="mr-1 h-4 w-4"/> Pricing</Badge>
-            <h2 className="text-2xl font-bold">Simple, cash‑upfront options</h2>
-          </div>
-          <div className="grid gap-4 md:grid-cols-3">
-            <PriceCard
-              headline="Pay‑in‑Full"
-              price="$7,500"
-              sub="Save $1,500 vs. list"
-              bullets={["Includes full sprint + guarantee", "$500 prototype credit if we miss deadline", "Best value; secures your slot"]}
-              ctaLabel="Pay‑in‑Full"
-              ctaHref={BOOKING_LINK}
-            />
-            <PriceCard
-              headline="Split Pay"
-              price="$4,000 + $4,000"
-              sub="Day 0 + Day 7"
-              bullets={["Same deliverables & guarantee", "Secure start with $4,000 today", "Remaining $4,000 on Day 7"]}
-              ctaLabel="Book with Split Pay"
-              ctaHref={BOOKING_LINK}
-            />
-            <PriceCard
-              headline="72‑Hour Reality Check"
-              price="$895"
-              sub="Credit if you upgrade within 7 days"
-              bullets={["10 hrs senior CAD + DFM review", "Annotated redlines + Zoom debrief", "Action plan with clear next steps"]}
-              ctaLabel="Buy Now"
-              ctaHref={REALITY_CHECK_LINK}
-            />
-          </div>
-          <p className="mt-4 text-xs text-zinc-500">Prices shown are for standard 14‑Day scope. 21/28‑Day plans are quoted on the intro call based on complexity.</p>
-        </div>
-      </section>
-
-      {/* Continuity Upsell */}
-      <section className="mx-auto max-w-7xl px-4 py-12">
-        <div className="grid gap-4 md:grid-cols-2">
-          <Card className="rounded-2xl">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2"><Cpu className="h-5 w-5"/> Fractional Hardware CTO</CardTitle>
-              <CardDescription>Real releases, not “advice” — keep momentum post‑sprint</CardDescription>
-            </CardHeader>
-            <CardContent className="text-sm text-zinc-700 space-y-2">
-              <p className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4"/> 20 hrs/month senior CAD/DFM/BOM</p>
-              <p className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4"/> 2 vendor‑ready releases + 3 RFQs</p>
-              <p className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4"/> Weekly 45‑min engineering review</p>
-              <p className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4"/> Slack ≤ 48h SLA</p>
-              <Separator />
-              <div className="text-zinc-800 font-medium">$3,500/mo · overage $225/hr · $9,450/quarter PIF</div>
-            </CardContent>
-            <CardFooter>
-              <Button asChild className="rounded-2xl"><a href={BOOKING_LINK} target="_blank" rel="noreferrer">Discuss Continuity <ArrowRight className="ml-2 h-4 w-4"/></a></Button>
-            </CardFooter>
-          </Card>
-
-          {/* Testimonials Placeholder */}
-          <Card className="rounded-2xl">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2"><Boxes className="h-5 w-5"/> What founders say</CardTitle>
-              <CardDescription>Drop real quotes & logos for social proof</CardDescription>
-            </CardHeader>
-            <CardContent className="grid gap-3">
-              <Testimonial quote="Clear Path flagged design flaws that would’ve cost us 3 weeks and $5K. They saved our prototype timeline." author="Founder, Consumer Hardware Startup"/>
-              <Testimonial quote="We got a STEP file, BOM, and DFM review — all in 72 hours. Super legit." author="Mechanical Engineer, YC‑backed team"/>
-              <Testimonial quote="Top level service, quick turnaround, and great quality." author="Executive, Building Materials"/>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="bg-zinc-50 py-12">
-        <div className="mx-auto max-w-7xl px-4">
-          <div className="mb-6 flex items-center gap-3">
-            <Badge variant="outline" className="rounded-2xl"><FileText className="mr-1 h-4 w-4"/> FAQ</Badge>
-            <h2 className="text-2xl font-bold">Frequently asked questions</h2>
-          </div>
-          <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="f1">
-              <AccordionTrigger>What file types do you deliver?</AccordionTrigger>
-              <AccordionContent>STEP, STL, and PDF drawings with GD&T, all revision‑controlled. Plus BOM (CSV/PDF) and the Vendor‑Ready Kit.</AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="f2">
-              <AccordionTrigger>Can you work under NDA?</AccordionTrigger>
-              <AccordionContent>Yes. We’re happy to sign a mutual NDA before reviewing files.</AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="f3">
-              <AccordionTrigger>What if my project is too complex for 14 days?</AccordionTrigger>
-              <AccordionContent>We’ll route you to a 21‑ or 28‑day plan on the intro call. Same outcome, scoped to reality with milestone checkpoints.</AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="f4">
-              <AccordionTrigger>Do you help with sourcing?</AccordionTrigger>
-              <AccordionContent>Yes. We include RFQ templates and deliver 3 qualified vendor quotes (price + lead time) for the agreed processes.</AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="f5">
-              <AccordionTrigger>How many revisions are included?</AccordionTrigger>
-              <AccordionContent>Two revision rounds are included in each sprint. Additional changes can be handled via overage or continuity.</AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </div>
-      </section>
-
-      {/* Final CTA */}
-      <section className="mx-auto max-w-7xl px-4 py-12">
-        <Card className="rounded-2xl border-2">
-          <CardHeader>
-            <CardTitle className="text-2xl">Ready to build smarter?</CardTitle>
-            <CardDescription>One path. 14 days. Vendor‑ready + 3 quotes — guaranteed.</CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-wrap items-center gap-3 text-sm text-zinc-600">
-            <Badge variant="secondary"><Calendar className="mr-1 h-4 w-4"/> Starts {START_DATE}</Badge>
-            <Badge variant="outline"><Timer className="mr-1 h-4 w-4"/> Enroll by {CLOSES}</Badge>
-            <Badge variant="destructive"><Gauge className="mr-1 h-4 w-4"/> {slotsLeft}/{SLOTS} slots left</Badge>
-          </CardContent>
-          <CardFooter className="flex flex-wrap gap-3">
-            <Button size="lg" asChild className="rounded-2xl"><a href={BOOKING_LINK} target="_blank" rel="noreferrer">Book 10‑min Intro <ArrowUpRight className="ml-2 h-4 w-4"/></a></Button>
-            <Button size="lg" variant="outline" asChild className="rounded-2xl"><a href={REALITY_CHECK_LINK} target="_blank" rel="noreferrer">Buy 72‑Hour Reality Check ($895) <ExternalLink className="ml-2 h-4 w-4"/></a></Button>
-          </CardFooter>
-        </Card>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-zinc-900 text-zinc-300">
-        <div className="mx-auto max-w-7xl px-4 py-8 grid gap-6 md:grid-cols-3 items-center">
-          <div className="flex items-center gap-3">
-            <img src={LOGO_SRC} alt="Clear Path Engineering" className="h-7 w-7" />
-            <div>
-              <div className="font-medium">Clear Path Engineering</div>
-              <div className="text-xs text-zinc-400">© {new Date().getFullYear()} All rights reserved.</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-6 md:justify-center text-sm">
-            <a className="hover:text-white" href="#">Privacy</a>
-            <a className="hover:text-white" href="#">Terms</a>
-            <a className="hover:text-white" href="mailto:moataz@clearpathengineering.ca">Contact</a>
-          </div>
-          <div className="flex items-center md:justify-end gap-3">
-            <img src={ENS_LOGO_SRC} alt="Engineers Nova Scotia" className="h-6" />
-            <span className="text-xs text-zinc-400">Member / Affiliation</span>
-          </div>
-        </div>
-      </footer>
-    </main>
-  );
-}
-
-function LaneCard({ days, title, bullets }: { days: number; title: string; bullets: string[] }) {
-  return (
-    <Card className="rounded-2xl">
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2"><Badge variant="secondary" className="rounded-2xl">{days}‑Day</Badge> {title}</CardTitle>
-          <Badge variant="outline" className="rounded-2xl"><Clock className="mr-1 h-4 w-4"/> Fixed window</Badge>
-        </div>
-        <CardDescription>Same outcome. Scope matched to reality.</CardDescription>
-      </CardHeader>
-      <CardContent className="text-sm text-zinc-700 space-y-2">
-        {bullets.map((b, i) => (
-          <p key={i} className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4"/> {b}</p>
-        ))}
-      </CardContent>
-    </Card>
-  );
-}
-
-function PriceCard({ headline, price, sub, bullets, ctaLabel, ctaHref }: { headline: string; price: string; sub?: string; bullets: string[]; ctaLabel: string; ctaHref: string }) {
-  return (
-    <Card className="rounded-2xl shadow-sm">
-      <CardHeader>
-        <CardTitle className="text-xl">{headline}</CardTitle>
-        {sub && <CardDescription>{sub}</CardDescription>}
-      </CardHeader>
-      <CardContent>
-        <div className="text-4xl font-extrabold">{price}</div>
-        <Separator className="my-4"/>
-        <ul className="space-y-2 text-sm text-zinc-700">
-          {bullets.map((b, i) => (
-            <li key={i} className="flex items-start gap-2"><Check className="mt-0.5 h-4 w-4"/> {b}</li>
-          ))}
-        </ul>
-      </CardContent>
-      <CardFooter>
-        <Button asChild className="w-full rounded-2xl">
-          <a href={ctaHref} target="_blank" rel="noreferrer">{ctaLabel}</a>
-        </Button>
-      </CardFooter>
-    </Card>
-  );
-}
-
-function Testimonial({ quote, author }: { quote: string; author: string }) {
-  return (
-    <div className="rounded-xl border bg-white p-4 shadow-sm">
-      <p className="text-sm leading-relaxed">“{quote}”</p>
-      <div className="mt-2 text-xs text-zinc-500">— {author}</div>
+```
+<!-- OFFER STACK -->
+<section id="offer" class="section" style="background:#f8fafc;">
+  <div class="container">
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+      <span class="badge">✔ Offer Stack</span>
+      <h2 style="margin:0;">What you walk away with</h2>
     </div>
-  );
-}
+    <div class="features">
+      <div class="card feature"><h3>DFM‑optimized CAD + drawings (GD&T)</h3><p class="muted">Reduce scrap & rework risk with manufacturable geometry.</p></div>
+      <div class="card feature"><h3>Tolerance stack‑up (critical dims)</h3><p class="muted">Objective fit & function targets for your chosen process.</p></div>
+      <div class="card feature"><h3>Release files</h3><p class="muted">STEP, STL, PDF drawings — rev‑controlled and vendor ready.</p></div>
+      <div class="card feature"><h3>BOM with alternates</h3><p class="muted">Materials, finish, fasteners + swap options for cost/lead time.</p></div>
+      <div class="card feature"><h3>Vendor‑Ready Kit</h3><p class="muted">RFQ template + 3 qualified quotes (price & lead time) handed off.</p></div>
+      <div class="card feature"><h3>Risk register + test plan</h3><p class="muted">Top 10 failure modes + mitigations for first proto.</p></div>
+      <div class="card feature"><h3>30 days async support</h3><p class="muted">Slack/WhatsApp ≤ 48h SLA to keep momentum post‑handoff.</p></div>
+    </div>
+    <div class="features" style="margin-top:16px;">
+      <div class="card feature"><h3>Performance Guarantee</h3><p class="muted">On‑time or we work free + $500 prototype credit.</p></div>
+      <div class="card feature"><h3>Acceptance Criteria</h3><p class="muted">DFM checklist passed; drawings w/ GD&T; BOM with alternates; 3 qualified quotes; founder sign‑off.</p></div>
+      <div class="card feature"><h3>How it runs</h3><p class="muted">Day 0: Intake + files + Slack → Day 3: 72‑Hour Reality Check → Day 7: mid‑sprint → Day 14: vendor handoff + quotes.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SCOPE GATE -->
+<section id="scope" class="section">
+  <div class="container">
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+      <span class="badge">🔧 Scope Gate</span>
+      <h2 style="margin:0;">Pick your lane (we’ll confirm on the call)</h2>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="Scope lanes">
+      <button class="tab active" data-tab="t14" role="tab" aria-selected="true">14‑Day</button>
+      <button class="tab" data-tab="t21" role="tab" aria-selected="false">21‑Day</button>
+      <button class="tab" data-tab="t28" role="tab" aria-selected="false">28‑Day</button>
+    </div>
+    <div id="t14" class="tabpanel active" role="tabpanel">
+      <div class="card" style="padding:16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+          <h3 style="margin:0;">Green Lane</h3><span class="badge">⏱️ Fixed window</span>
+        </div>
+        <p class="muted">Same outcome. Scope matched to reality.</p>
+        <ul class="muted">
+          <li>≤10 parts (single/small assembly)</li>
+          <li>CNC / Sheet / FDM/SLA/SLS / simple jigs</li>
+          <li>Standard tolerances (e.g., CNC ≥ ±0.05–0.10 mm)</li>
+          <li>Off‑the‑shelf electronics</li>
+          <li>No regulated compliance</li>
+        </ul>
+      </div>
+    </div>
+    <div id="t21" class="tabpanel" role="tabpanel">
+      <div class="card" style="padding:16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+          <h3 style="margin:0;">Yellow Lane</h3><span class="badge">⏱️ Fixed window</span>
+        </div>
+        <p class="muted">11–25 parts; some tight features; mixed processes; quotes on agreed processes.</p>
+      </div>
+    </div>
+    <div id="t28" class="tabpanel" role="tabpanel">
+      <div class="card" style="padding:16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+          <h3 style="margin:0;">Red Lane</h3><span class="badge">⏱️ Fixed window</span>
+        </div>
+        <p class="muted">&gt;25 parts or complex mechanisms; injection‑mold‑ready DFM; tight assemblies / regulated categories.</p>
+      </div>
+    </div>
+
+    <!-- Quick scope checker -->
+    <div class="card" style="margin-top:18px;">
+      <div style="padding:16px;">
+        <h3 style="margin:0 0 6px;">Quick scope checker</h3>
+        <p class="muted" style="margin:0 0 12px;">Answer 5 questions to see your likely lane. We’ll finalize on the intro call.</p>
+        <div class="grid" style="grid-template-columns: repeat(5, 1fr); gap:12px;">
+          <div>
+            <label for="parts" class="muted" style="font-size:12px;">Estimated part count</label>
+            <input id="parts" type="number" min="1" placeholder="e.g., 6" class="inp" style="width:100%; padding:10px; border:1px solid #e5e7eb; border-radius:10px;" />
+          </div>
+          <div>
+            <label for="process" class="muted" style="font-size:12px;">Primary process</label>
+            <select id="process" class="inp" style="width:100%; padding:10px; border:1px solid #e5e7eb; border-radius:10px;">
+              <option value="">Select…</option>
+              <option value="cnc">CNC machining</option>
+              <option value="sheet">Sheet metal</option>
+              <option value="fdm">3D print (FDM)</option>
+              <option value="sla">3D print (SLA)</option>
+              <option value="sls">3D print (SLS)</option>
+              <option value="jig">Simple jig/fixture</option>
+              <option value="mold">Injection molding (production)</option>
+              <option value="other">Other / mixed</option>
+            </select>
+          </div>
+          <div>
+            <label for="electronics" class="muted" style="font-size:12px;">Electronics</label>
+            <select id="electronics" class="inp" style="width:100%; padding:10px; border:1px solid #e5e7eb; border-radius:10px;">
+              <option value="">Select…</option>
+              <option value="off">Off‑the‑shelf only</option>
+              <option value="custom">Custom PCB / complex integration</option>
+            </select>
+          </div>
+          <div>
+            <label for="tolerance" class="muted" style="font-size:12px;">Tolerance level</label>
+            <select id="tolerance" class="inp" style="width:100%; padding:10px; border:1px solid #e5e7eb; border-radius:10px;">
+              <option value="">Select…</option>
+              <option value="rough">Rough</option>
+              <option value="standard">Standard</option>
+              <option value="tight">Tight</option>
+            </select>
+          </div>
+          <div>
+            <label for="deadline" class="muted" style="font-size:12px;">Target deadline</label>
+            <input id="deadline" type="date" class="inp" style="width:100%; padding:10px; border:1px solid #e5e7eb; border-radius:10px;" />
+          </div>
+        </div>
+      </div>
+      <div style="padding:12px 16px; border-top:1px solid #e5e7eb; display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;">
+        <div class="muted" id="laneOut">⚡ Recommended: — <span style="margin:0 8px;">|</span> We’ll confirm scope & acceptance criteria on the call.</div>
+        <div class="grid" style="grid-auto-flow: column; grid-auto-columns: max-content; gap:10px;">
+          <a class="btn" href="mailto:moataz@clearpathengineering.ca?subject=Book%20Intro%20Call%20(Proto-Ready%20Sprint)" target="_blank" rel="noreferrer">📅 Book Intro</a>
+          <a class="btn" href="mailto:moataz@clearpathengineering.ca?subject=Buy%2072-Hour%20Reality%20Check%20($895)" target="_blank" rel="noreferrer">💳 Buy Reality Check ($895)</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="section" style="background:#f8fafc;">
+  <div class="container">
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+      <span class="badge">💵 Pricing</span>
+      <h2 style="margin:0;">Simple, cash‑upfront options</h2>
+    </div>
+    <div class="offers">
+      <div class="card offer">
+        <h3>Pay‑in‑Full</h3>
+        <div class="price">$7,500</div>
+        <div class="muted">Save $1,500 vs. list</div>
+        <ul>
+          <li>Full sprint + guarantee</li>
+          <li>$500 prototype credit if we miss deadline</li>
+          <li>Best value; secures your slot</li>
+        </ul>
+        <a class="btn primary block" href="mailto:moataz@clearpathengineering.ca?subject=Book%20Intro%20Call%20(Proto-Ready%20Sprint)" target="_blank" rel="noreferrer">Pay‑in‑Full</a>
+      </div>
+      <div class="card offer">
+        <h3>Split Pay</h3>
+        <div class="price">$4,000 + $4,000</div>
+        <div class="muted">Day 0 + Day 7</div>
+        <ul>
+          <li>Same deliverables & guarantee</li>
+          <li>Secure start with $4,000 today</li>
+          <li>Remaining $4,000 on Day 7</li>
+        </ul>
+        <a class="btn primary block" href="mailto:moataz@clearpathengineering.ca?subject=Book%20Intro%20Call%20(Proto-Ready%20Sprint)" target="_blank" rel="noreferrer">Book with Split Pay</a>
+      </div>
+      <div class="card offer">
+        <h3>72‑Hour Reality Check</h3>
+        <div class="price">$895</div>
+        <div class="muted">Credit if you upgrade within 7 days</div>
+        <ul>
+          <li>10 hrs senior CAD + DFM review</li>
+          <li>Annotated redlines + Zoom debrief</li>
+          <li>Action plan with clear next steps</li>
+        </ul>
+        <a class="btn primary block" href="mailto:moataz@clearpathengineering.ca?subject=Buy%2072-Hour%20Reality%20Check%20($895)" target="_blank" rel="noreferrer">Buy Now</a>
+      </div>
+    </div>
+    <p class="muted" style="margin-top:12px; font-size:12px;">Prices shown are for standard 14‑Day scope. 21/28‑Day plans are quoted based on complexity.</p>
+  </div>
+</section>
+
+<!-- CONTINUITY + TESTIMONIALS -->
+<section class="section">
+  <div class="container" style="display:grid; gap:16px; grid-template-columns:1fr 1fr;">
+    <div class="card" style="padding:16px;">
+      <h3 style="margin:0">Fractional Hardware CTO</h3>
+      <p class="muted">Real releases, not “advice” — keep momentum post‑sprint</p>
+      <ul class="muted">
+        <li>20 hrs/month senior CAD/DFM/BOM</li>
+        <li>2 vendor‑ready releases + 3 RFQs</li>
+        <li>Weekly 45‑min engineering review</li>
+        <li>Slack ≤ 48h SLA</li>
+      </ul>
+      <hr style="border:none; border-top:1px solid #e5e7eb; margin:12px 0;"/>
+      <div style="font-weight:600;">$3,500/mo · overage $225/hr · $9,450/quarter PIF</div>
+      <div style="margin-top:12px;"><a class="btn" href="mailto:moataz@clearpathengineering.ca?subject=Discuss%20Continuity%20(Fractional%20Hardware%20CTO)" target="_blank" rel="noreferrer">Discuss Continuity ▸</a></div>
+    </div>
+    <div class="card" style="padding:16px;">
+      <h3 style="margin:0">What founders say</h3>
+      <p class="muted">Drop real quotes & logos for social proof</p>
+      <div class="grid" style="gap:10px;">
+        <div class="card" style="padding:12px;">
+          <p class="muted" style="color:#111827;">“Clear Path flagged design flaws that would’ve cost us 3 weeks and $5K. They saved our prototype timeline.”</p>
+          <div class="muted" style="font-size:12px;">— Founder, Consumer Hardware Startup</div>
+        </div>
+        <div class="card" style="padding:12px;">
+          <p class="muted" style="color:#111827;">“We got a STEP file, BOM, and DFM review — all in 72 hours. Super legit.”</p>
+          <div class="muted" style="font-size:12px;">— Mechanical Engineer, YC‑backed team</div>
+        </div>
+        <div class="card" style="padding:12px;">
+          <p class="muted" style="color:#111827;">“Top level service, quick turnaround, and great quality.”</p>
+          <div class="muted" style="font-size:12px;">— Executive, Building Materials</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" style="background:#f8fafc;">
+  <div class="container">
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+      <span class="badge">📄 FAQ</span>
+      <h2 style="margin:0;">Frequently asked questions</h2>
+    </div>
+    <div class="acc">
+      <div class="acc-item">
+        <button class="acc-btn">What file types do you deliver?</button>
+        <div class="acc-content">STEP, STL, and PDF drawings with GD&T, all revision‑controlled. Plus BOM (CSV/PDF) and the Vendor‑Ready Kit.</div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn">Can you work under NDA?</button>
+        <div class="acc-content">Yes. We’re happy to sign a mutual NDA before reviewing files.</div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn">What if my project is too complex for 14 days?</button>
+        <div class="acc-content">We’ll route you to a 21‑ or 28‑day plan. Same outcome, scoped to reality with milestone checkpoints.</div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn">Do you help with sourcing?</button>
+        <div class="acc-content">Yes. We include RFQ templates and deliver 3 qualified vendor quotes (price + lead time) for the agreed processes.</div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-btn">How many revisions are included?</button>
+        <div class="acc-content">Two revision rounds are included in each sprint. Additional changes can be handled via overage or continuity.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="section">
+  <div class="container card" style="padding:16px; border:2px solid #e5e7eb;">
+    <h3 style="margin:0 0 6px;">Ready to build smarter?</h3>
+    <p class="muted" style="margin:0 0 12px;">One path. 14 days. Vendor‑ready + 3 quotes — guaranteed.</p>
+    <div class="grid" style="grid-auto-flow: column; grid-auto-columns:max-content; gap:10px; flex-wrap:wrap;">
+      <span class="badge">🗓️ Starts Mon, Sept 8, 2025</span>
+      <span class="badge">⏱️ Enroll by Thu, Sept 4, 2025 @ 5pm ET</span>
+      <span class="badge" style="background:#ef4444; color:white; border-color:transparent;">🎯 6 slots total</span>
+    </div>
+    <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+      <a class="btn primary" href="mailto:moataz@clearpathengineering.ca?subject=Book%20Intro%20Call%20(Proto-Ready%20Sprint)" target="_blank" rel="noreferrer">Book 10‑min Intro ▸</a>
+      <a class="btn" href="mailto:moataz@clearpathengineering.ca?subject=Buy%2072-Hour%20Reality%20Check%20($895)" target="_blank" rel="noreferrer">Buy 72‑Hour Reality Check ($895)</a>
+    </div>
+  </div>
+</section>
+```
+
+  </main>
+
+  <!-- FOOTER -->
+
+  <footer>
+    <div class="container foot" style="display:grid; grid-template-columns:1fr auto; gap:16px; align-items:center;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <img src="assets/IconOnly_Transparent_NoBuffer.png" alt="Clear Path Engineering" style="height:28px; width:28px;"/>
+        <div>
+          <div style="font-weight:700; color:#e6eef6;">Clear Path Engineering</div>
+          <div class="muted" style="color:#8ca3ba; font-size:12px;">© <span id="year"></span> All rights reserved.</div>
+        </div>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px; justify-self:end;">
+        <img src="assets/Engineers_NS_white.png" alt="Engineers Nova Scotia" style="height:24px;"/>
+        <span style="color:#8ca3ba; font-size:12px;">Member / Affiliation</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Year
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Tabs
+    document.querySelectorAll('.tab').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+        document.querySelectorAll('.tabpanel').forEach(p=>p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.tab).classList.add('active');
+      });
+    });
+
+    // Accordion
+    document.querySelectorAll('.acc-item').forEach(item => {
+      item.querySelector('.acc-btn').addEventListener('click', ()=>{
+        item.classList.toggle('open');
+      });
+    });
+
+    // Quick scope checker logic (mirrors your TSX rules)
+    const partsEl = document.getElementById('parts');
+    const procEl = document.getElementById('process');
+    const elecEl = document.getElementById('electronics');
+    const tolEl = document.getElementById('tolerance');
+    const laneOut = document.getElementById('laneOut');
+
+    [partsEl, procEl, elecEl, tolEl].forEach(el=> el.addEventListener('input', recalc));
+
+    function recalc(){
+      const parts = parseInt(partsEl.value || '0', 10);
+      const tolerance = tolEl.value; // '', 'rough', 'standard', 'tight'
+      const greenProcesses = ['cnc','sheet','fdm','sla','sls','jig'];
+      const isGreenProc = greenProcesses.includes(procEl.value);
+      const offTheShelf = elecEl.value === 'off';
+
+      let lane = '—';
+      if (parts > 0 && parts <= 10 && isGreenProc && tolerance !== 'tight' && offTheShelf) lane = '14‑Day';
+      else if (parts > 0 && parts <= 25) lane = '21‑Day';
+      else if (parts > 25 || tolerance === 'tight' || (elecEl.value && !offTheShelf)) lane = '28‑Day';
+
+      laneOut.innerHTML = `⚡ Recommended: <strong>${lane}</strong> <span style="margin:0 8px;">|</span> We’ll confirm scope & acceptance criteria on the call.`;
+    }
+  </script>
+
+</body>
+</html>
