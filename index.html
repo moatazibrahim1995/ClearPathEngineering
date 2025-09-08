@@ -103,7 +103,7 @@
   </style>
   <script>
     function scrollToId(id){ const el = document.getElementById(id); if(el) el.scrollIntoView({behavior:'smooth', block:'start'}); }
-    // Simple ROI calculator
+    // Simple ROI calculator (keep for now)
     function fmt(n){ return n.toLocaleString(undefined,{maximumFractionDigits:0}); }
     function calcROI(){
       const units = +document.getElementById('units').value || 0;
@@ -319,15 +319,20 @@
     </div>
   </section>
 
+  <!-- Intake / Estimator (Typeform embed) -->
   <section class="section" id="intake">
     <div class="container">
-      <h2>Optional intake (2–3 minutes)</h2>
-      <p class="section-sub">This helps us prep your call and estimate ROI / cost‑of‑delay. If you’ve already booked, you can still fill this in.</p>
-      <!-- Replace the src with your Google Form embed URL (Form → Send → </> Embed) -->
+      <h2>Estimator & Intake (2–3 minutes)</h2>
+      <p class="section-sub">We estimate delay risk from DFM signals; if you share unit economics, we’ll also show a rough cost‑of‑delay. Heuristics, not guarantees.</p>
       <div class="card">
-        <iframe src="" width="100%" height="760" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+        <!-- Typeform intake + estimator -->
+        <iframe id="typeform-embed"
+          src="https://form.typeform.com/to/x28nkG0K"
+          width="100%" height="760" frameborder="0"
+          allow="camera; microphone; autoplay; encrypted-media;"
+          style="border:0;border-radius:12px;background:transparent">Loading…</iframe>
       </div>
-      <p class="fine" style="margin-top:10px">Tip: If you collect files here, Google requires sign‑in. Otherwise, share a Drive/Dropbox link inside the form.</p>
+      <p class="fine" style="margin-top:10px">Attribution enabled: UTMs from this page are passed to the form automatically.</p>
     </div>
   </section>
 
@@ -365,5 +370,22 @@
   </footer>
 
   <script>document.getElementById('y').textContent=new Date().getFullYear()</script>
+
+  <!-- Append page UTMs to Typeform embed automatically -->
+  <script>
+    (function(){
+      var tf = document.getElementById('typeform-embed');
+      if(!tf) return;
+      var params = new URLSearchParams(window.location.search);
+      var keys = ['utm_source','utm_medium','utm_campaign','utm_content','ref'];
+      var extra = new URLSearchParams();
+      keys.forEach(function(k){ var v = params.get(k); if(v) extra.set(k, v); });
+      if(Array.from(extra.keys()).length){
+        var url = new URL(tf.src);
+        extra.forEach(function(v,k){ url.searchParams.set(k,v); });
+        tf.src = url.toString();
+      }
+    })();
+  </script>
 </body>
 </html>
