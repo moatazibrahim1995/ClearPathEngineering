@@ -16,10 +16,10 @@
   </script>
   <style>
     :root{
-      /* Bright theme aligned with Squarespace vibe */
+      /* Bright theme aligned with your Squarespace vibe */
       --bg:#ffffff;              /* page background */
-      --ink:#0f172a;             /* primary text (slate-900) */
-      --muted:#475569;           /* secondary text (slate-600) */
+      --ink:#0f172a;             /* primary text */
+      --muted:#475569;           /* secondary text */
       --line:#e2e8f0;            /* light border */
       --card:#ffffff;            /* card bg */
       --brand:#f1b800;           /* gold accent */
@@ -42,7 +42,6 @@
     .btn:hover{transform:translateY(-1px)}
     .btn.primary{background:var(--brand);border-color:transparent;color:#161616}
     .btn.blue{background:var(--brand2);border-color:transparent;color:#fff}
-    .btn.ghost{background:#fff}
 
     /* hero */
     .hero{padding:72px 0 24px}
@@ -93,7 +92,7 @@
       <div class="nav-links" role="navigation" aria-label="Primary">
         <a href="#offers">Offers</a>
         <a href="#mistakes">Avoidable mistakes</a>
-        <a href="#proof">Proof</a>
+        <a href="#results">Results</a>
         <a href="#book" class="btn primary">Book call</a>
       </div>
     </div>
@@ -153,20 +152,32 @@
   <!-- Offers (clearly differentiated) -->
   <section class="section" id="offers">
     <div class="container">
-      <h2>Two different ways to work—clearly different outcomes</h2>
-      <p class="sub">Pick speed or stewardship. Either way, we protect time and money.</p>
+      <h2>Three ways to work — pick speed or stewardship</h2>
+      <p class="sub">Same goal: protect time and money. Different modes for where you are.</p>
 
-      <div class="grid cols-2">
+      <div class="grid cols-3">
+        <div class="card">
+          <h3 style="margin:0 0 6px">Application Sprint <span style="color:var(--brand2)">— 48–72h</span></h3>
+          <p class="sub">Under a program deadline? We help you submit confidently.</p>
+          <ul class="list">
+            <li>Draft responses + compile materials</li>
+            <li>Simple checklist of what's left</li>
+            <li>One review loop before submission</li>
+          </ul>
+          <p class="sub"><strong>Best for:</strong> founders racing funding/application cutoffs.</p>
+          <a class="btn" href="#book">Ask about the sprint</a>
+        </div>
+
         <div class="card">
           <h3 style="margin:0 0 6px">Starter Build Plan <span style="color:var(--brand2)">— 4 weeks, $5,000</span></h3>
-          <p class="sub">A focused sprint to get supplier‑ready fast.</p>
+          <p class="sub">Focused sprint to get supplier‑ready fast.</p>
           <ul class="list">
-            <li>Week 1: Intake, risk map, **one‑page plan**</li>
-            <li>Week 2: **DFM review + tolerances** on priority parts</li>
-            <li>Week 3: **RFQ pack** + outreach to 2–3 suppliers</li>
-            <li>Week 4: **Quote compare** + go/no‑go & next steps</li>
+            <li>Week 1: Intake, risk map, one‑page plan</li>
+            <li>Week 2: DFM review + tolerances (priority parts)</li>
+            <li>Week 3: RFQ pack + outreach to 2–3 suppliers</li>
+            <li>Week 4: Quote compare + go/no‑go & next steps</li>
           </ul>
-          <p class="sub"><strong>Best for:</strong> founders needing quotes & clarity before spending on tooling/prototypes.</p>
+          <p class="sub"><strong>Best for:</strong> quotes & clarity before tooling/prototypes.</p>
           <a class="btn primary" href="#book">Start the 4‑week plan</a>
         </div>
 
@@ -176,10 +187,10 @@
           <ul class="list">
             <li>Weekly leadership call + decision log</li>
             <li>Roadmap + operating scoreboard</li>
-            <li>Supplier & quote management; light engineering reviews</li>
+            <li>Supplier & quote management; light reviews</li>
             <li>Investor‑ready monthly update</li>
           </ul>
-          <p class="sub"><strong>Best for:</strong> teams needing steady stewardship from concept through first articles.</p>
+          <p class="sub"><strong>Best for:</strong> steady stewardship to first articles.</p>
           <a class="btn blue" href="#book">Apply for a retainer slot</a>
         </div>
       </div>
@@ -188,14 +199,13 @@
         <h3 style="margin:0 0 6px">What’s the difference?</h3>
         <table>
           <thead>
-            <tr><th>Dimension</th><th>Starter Build Plan (4 wks)</th><th>Fractional Lead (6 mo)</th></tr>
+            <tr><th>Dimension</th><th>Application Sprint</th><th>Starter Build Plan</th><th>Fractional Lead</th></tr>
           </thead>
           <tbody>
-            <tr><td>Goal</td><td>Supplier‑ready + quotes in 30 days</td><td>Ship decisions weekly; de‑risk across phases</td></tr>
-            <tr><td>Cadence</td><td>Weekly milestones; sprint artifacts</td><td>Weekly leadership; monthly checkpoints</td></tr>
-            <tr><td>Scope</td><td>DFM/tolerances for priority parts + RFQ pack</td><td>Ongoing supplier management + light reviews</td></tr>
-            <tr><td>Hands‑on</td><td>~6 hours total, focused</td><td>~4 hours / week average</td></tr>
-            <tr><td>When to choose</td><td>Need quotes/clarity now</td><td>Need steady stewardship to first articles</td></tr>
+            <tr><td>Goal</td><td>Submit on time, confidently</td><td>Supplier‑ready + quotes in 30 days</td><td>Ship decisions weekly; de‑risk across phases</td></tr>
+            <tr><td>Cadence</td><td>48–72h burst</td><td>Weekly milestones</td><td>Weekly leadership; monthly checkpoints</td></tr>
+            <tr><td>Scope</td><td>Responses + checklist</td><td>DFM/tolerances + RFQ pack</td><td>Supplier mgmt + light reviews</td></tr>
+            <tr><td>When to choose</td><td>Deadline this week</td><td>Need quotes/clarity now</td><td>Need ongoing stewardship</td></tr>
           </tbody>
         </table>
       </div>
@@ -220,29 +230,61 @@
       <div class="card">
         <h2>How we prevent waste</h2>
         <ul class="list">
-          <li>Early **DFM + tolerance** pass on priority parts</li>
-          <li>Deliberate **parting lines, draft, radii** review</li>
-          <li>Right‑sized **tolerances & finishes** for cost/fit</li>
-          <li>**DFA**: reduce part count and fastener chaos</li>
-          <li>Supplier‑ready **RFQ pack**; 2–3 quotes fast</li>
-          <li>Regulatory **pre‑check** to avoid late surprises</li>
+          <li>Early DFM + tolerance pass on priority parts</li>
+          <li>Deliberate parting lines, draft, radii review</li>
+          <li>Right‑sized tolerances & finishes for cost/fit</li>
+          <li>DFA: reduce part count and fastener chaos</li>
+          <li>Supplier‑ready RFQ pack; 2–3 quotes fast</li>
+          <li>Regulatory pre‑check to avoid late surprises</li>
         </ul>
-        <p class="sub">Time saved = months. Money saved = avoid re‑tool, scrap, and quote shock.</p>
+        <p class="sub">Time saved = months. Money saved = avoiding re‑tool, scrap, and quote shock.</p>
       </div>
     </div>
   </section>
 
-  <!-- Proof strip -->
+  <!-- Results / anonymized case (from your project notes) -->
+  <section class="section" id="results">
+    <div class="container">
+      <h2>Recent win (anonymized): from stress to supplier‑ready</h2>
+      <p class="sub">Prototype‑stage founder building a modular plastic wash station. Deadline pressure. Confusion on wall thickness, hole sizes, and scope boundaries.</p>
+
+      <div class="grid cols-2">
+        <div class="card">
+          <h3 style="margin:0 0 6px">Before</h3>
+          <ul class="list">
+            <li>Thought walls should be “~20 mm”; suppliers hesitant to quote</li>
+            <li>Depth/pitch undecided; geometry kept shifting</li>
+            <li>Program application looming; no clear checklist</li>
+            <li>Unclear what was included vs. change request</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3 style="margin:0 0 6px">After</h3>
+          <ul class="list">
+            <li>Right‑sized walls to 3–4 mm (per DFM guidance)</li>
+            <li>Standardized hole diameters for insert compatibility</li>
+            <li>RFQ pack built; 2–3 suppliers engaged with clear tolerances</li>
+            <li>Application Sprint: responses drafted + submission checklist</li>
+            <li>Decision Log: depth/pitch gate; change control clarified</li>
+          </ul>
+          <p class="sub"><strong>Result:</strong> fewer redesign loops, credible quotes, and an on‑time application—client confidence up, panic down.</p>
+        </div>
+      </div>
+
+      <div class="container" style="padding:0;margin-top:14px">
+        <div class="quote-wrap">
+          <p class="quote"><strong>“I would have no doubt you are someone with the ethics and capacity to work with almost anybody.”</strong><br><span class="sub">— anonymized founder feedback</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Proof strip (logos/partners simplified) -->
   <section class="section" id="proof">
     <div class="container grid cols-3">
       <div class="card"><strong>Michelin North America</strong><p class="sub">Process‑ready design reviews</p></div>
       <div class="card"><strong>Protocase</strong><p class="sub">Supplier‑ready drawings & callouts</p></div>
       <div class="card"><strong>Outdoor‑Fit</strong><p class="sub">Rapid quotes; clean BOM</p></div>
-    </div>
-    <div class="container" style="margin-top:14px">
-      <div class="quote-wrap">
-        <p class="quote"><strong>“STEP files, BOM, and a DFM review in three days. Very professional.”</strong><br><span class="sub">Mechanical engineer, funded hardware team</span></p>
-      </div>
     </div>
   </section>
 
@@ -274,7 +316,7 @@
   <footer style="padding:28px 0;border-top:1px solid var(--line);background:#fff">
     <div class="container" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px">
       <div>© <span id="y"></span> Clear Path Engineering • Nova Scotia, Canada</div>
-      <div style="display:flex;gap:14px"><a href="#offers">Offers</a><a href="#mistakes">Avoidable mistakes</a><a href="#book">Book</a><a href="#intake">Estimator</a></div>
+      <div style="display:flex;gap:14px"><a href="#offers">Offers</a><a href="#mistakes">Avoidable mistakes</a><a href="#results">Results</a><a href="#book">Book</a><a href="#intake">Estimator</a></div>
     </div>
   </footer>
 
