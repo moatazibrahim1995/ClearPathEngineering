@@ -292,28 +292,21 @@
     </div>
   </section>
 
-  <!-- Intake -->
-<!-- Intake / Estimator (Typeform) -->
+ <!-- Intake / Estimator (Typeform) -->
 <!-- Intake / Estimator (Typeform) -->
 <section class="section" id="intake">
   <div class="container">
     <h2>Prefer to start with the quick estimator?</h2>
     <p class="sub">2–3 minutes. We score delay risk from DFM signals; share unit economics and we’ll show a rough cost-of-delay.</p>
-    <div class="card">
-      <iframe
-        id="typeform-embed"
-        title="Clear Path quick estimator"
-        src="about:blank"                         <!-- key change -->
-        data-src="https://form.typeform.com/to/x28nkG0K?typeform-medium=embed-snippet"
-        width="100%" height="760" frameborder="0"
-        allow="camera; microphone; autoplay; encrypted-media;"
-        loading="lazy"
-        style="border:0;border-radius:12px;background:transparent">Loading…</iframe>
+
+    <!-- Empty shell; no iframe in HTML -->
+    <div id="typeform-shell" class="card"
+         style="height:760px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:transparent">
+      <button id="load-estimator" class="btn blue">Load estimator</button>
+      <noscript>Enable JavaScript to view the estimator.</noscript>
     </div>
   </div>
 </section>
-
-
 
   <!-- FAQ (visible, for FAQPage schema) -->
   <section class="section" id="faq">
@@ -367,55 +360,57 @@
 
   <script>document.getElementById('y').textContent=new Date().getFullYear()</script>
 
-  <!-- Append page UTMs to Typeform embed -->
   <script>
-    (function(){
-      var tf=document.getElementById('typeform-embed');
-      if(!tf) return;
-      var params=new URLSearchParams(location.search);
-      var keys=['utm_source','utm_medium','utm_campaign','utm_content','ref'];
-      var url=new URL(tf.src);
-      keys.forEach(k=>{ if(params.get(k)) url.searchParams.set(k, params.get(k)); });
-      tf.src=url.toString();
-    })();
-  </script>
-
-  <!-- FAQPage structured data -->
-<script>
 (function(){
-  // Prevent browser restoring deep scroll on first visit
-  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-
-  var tf = document.getElementById('typeform-embed');
-  if(!tf) return;
-
-  function loadTypeformOnce(){
-    if (tf.dataset.loaded) return;
-    var base = new URL(tf.getAttribute('data-src'));
-    var params = new URLSearchParams(location.search);
-    ['utm_source','utm_medium','utm_campaign','utm_content','ref'].forEach(function(k){
-      var v = params.get(k); if (v) base.searchParams.set(k, v);
+  // Build the Typeform URL with any UTM tags
+  function buildUrl() {
+    var u = new URL("https://form.typeform.com/to/x28nkG0K");
+    var qs = new URLSearchParams(location.search);
+    ["utm_source","utm_medium","utm_campaign","utm_content","ref"].forEach(function(k){
+      var v = qs.get(k); if (v) u.searchParams.set(k, v);
     });
-    tf.src = base.toString();
-    tf.dataset.loaded = '1';
+    // identify embed origin (optional but useful)
+    u.searchParams.set("typeform-medium","embed");
+    return u.toString();
   }
 
-  // Load on click of any #intake link
-  document.querySelectorAll('a[href="#intake"]').forEach(function(a){
-    a.addEventListener('click', loadTypeformOnce, { once:true });
-  });
+  // Create iframe only once
+  var shell = document.getElementById("typeform-shell");
+  if (!shell) return;
+  function inject() {
+    if (shell.dataset.loaded) return;
+    var ifr = document.createElement("iframe");
+    ifr.title = "Clear Path quick estimator";
+    ifr.src = buildUrl();           // nothing until we set it here
+    ifr.width = "100%";
+    ifr.height = "760";
+    ifr.frameBorder = "0";
+    ifr.allow = "camera; microphone; autoplay; encrypted-media;";
+    ifr.style.cssText = "border:0;border-radius:12px;background:transparent";
+    shell.innerHTML = "";           // remove button
+    shell.appendChild(ifr);
+    shell.dataset.loaded = "1";
+  }
 
-  // Lazy-load when near viewport
-  var intake = document.getElementById('intake');
-  if ('IntersectionObserver' in window && intake){
-    var io = new IntersectionObserver(function(entries){
-      if(entries.some(e => e.isIntersecting)){ loadTypeformOnce(); io.disconnect(); }
-    }, { rootMargin: '400px 0px' });
-    io.observe(intake);
+  // Click to load
+  var btn = document.getElementById("load-estimator");
+  if (btn) btn.addEventListener("click", inject);
+
+  // Load when user scrolls near the section (intent)
+  if ("IntersectionObserver" in window){
+    var io = new IntersectionObserver(function(es){
+      if (es.some(e => e.isIntersecting)) { inject(); io.disconnect(); }
+    }, { rootMargin: "400px 0px" });
+    io.observe(shell);
   } else {
-    // Fallback: load a bit later so it can't steal focus
-    setTimeout(loadTypeformOnce, 3000);
+    // Fallback: gentle delay so it won't steal focus
+    setTimeout(inject, 3000);
   }
+
+  // If user clicks any “Estimator” link in the nav, load immediately
+  document.querySelectorAll('a[href="#intake"]').forEach(function(a){
+    a.addEventListener("click", inject, { once:true });
+  });
 })();
 </script>
 
