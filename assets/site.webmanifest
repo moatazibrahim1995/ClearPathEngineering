@@ -1,0 +1,11 @@
+{
+  "name": "Clear Path Engineering",
+  "short_name": "CPE",
+  "icons": [
+    { "src": "/assets/IconOnly_Transparent_NoBuffer.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/assets/IconOnly_Transparent_NoBuffer.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "theme_color": "#2563eb",
+  "background_color": "#ffffff",
+  "display": "standalone"
+}
