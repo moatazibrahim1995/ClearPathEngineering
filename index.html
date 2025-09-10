@@ -293,15 +293,25 @@
   </section>
 
   <!-- Intake -->
-  <section class="section" id="intake">
-    <div class="container">
-      <h2>Prefer to start with the quick estimator?</h2>
-      <p class="sub">2–3 minutes. We score delay risk from DFM signals; share unit economics and we’ll show a rough cost-of-delay.</p>
-      <div class="card">
-        <iframe id="typeform-embed" src="https://form.typeform.com/to/x28nkG0K" width="100%" height="760" frameborder="0" allow="camera; microphone; autoplay; encrypted-media;" style="border:0;border-radius:12px;background:transparent">Loading…</iframe>
-      </div>
+<!-- Intake / Estimator (Typeform) -->
+<section class="section" id="intake">
+  <div class="container">
+    <h2>Prefer to start with the quick estimator?</h2>
+    <p class="sub">2–3 minutes. We score delay risk from DFM signals; share unit economics and we’ll show a rough cost-of-delay.</p>
+    <div class="card">
+      <iframe
+        id="typeform-embed"
+        title="Clear Path quick estimator"
+        src=""                      <!-- leave blank initially -->
+        data-src="https://form.typeform.com/to/x28nkG0K"
+        width="100%" height="760" frameborder="0"
+        allow="camera; microphone; autoplay; encrypted-media;"
+        loading="lazy"
+        style="border:0;border-radius:12px;background:transparent">Loading…</iframe>
     </div>
-  </section>
+  </div>
+</section>
+
 
   <!-- FAQ (visible, for FAQPage schema) -->
   <section class="section" id="faq">
@@ -369,28 +379,43 @@
   </script>
 
   <!-- FAQPage structured data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [{
-      "@type": "Question",
-      "name": "What do I get in the Starter Build Plan?",
-      "acceptedAnswer": {"@type": "Answer","text": "A 4-week sprint to lock DFM, build an RFQ pack, engage 2–3 suppliers, compare quotes, and make go/no-go decisions."}
-    },{
-      "@type": "Question",
-      "name": "Do you build physical prototypes?",
-      "acceptedAnswer": {"@type": "Answer","text": "We focus on design clarity and supplier-ready documentation. If a prototype is required, we’ll coordinate vendors; we don’t run in-house prototyping."}
-    },{
-      "@type": "Question",
-      "name": "How fast can I get quotes?",
-      "acceptedAnswer": {"@type": "Answer","text": "Typically within 1–2 weeks after the RFQ pack is finalized, depending on supplier responsiveness and part complexity."}
-    },{
-      "@type": "Question",
-      "name": "Where do you work?",
-      "acceptedAnswer": {"@type": "Answer","text": "We’re based in Nova Scotia and work remotely with founders across Canada and the U.S."}
-    }]
+<script>
+(function(){
+  // Avoid browser restoring a deep scroll on first load
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+  var tf = document.getElementById('typeform-embed');
+  if(!tf) return;
+
+  function loadTypeformOnce(){
+    if (tf.dataset.loaded) return;
+    var base = new URL(tf.dataset.src);
+    var params = new URLSearchParams(location.search);
+    ['utm_source','utm_medium','utm_campaign','utm_content','ref'].forEach(function(k){
+      var v = params.get(k); if (v) base.searchParams.set(k, v);
+    });
+    tf.src = base.toString();
+    tf.dataset.loaded = '1';
   }
-  </script>
+
+  // Load on intent (clicking any link to #intake)
+  document.querySelectorAll('a[href="#intake"]').forEach(function(a){
+    a.addEventListener('click', loadTypeformOnce, { once:true });
+  });
+
+  // Also load when the section is near the viewport (lazy)
+  var intake = document.getElementById('intake');
+  if ('IntersectionObserver' in window && intake){
+    var io = new IntersectionObserver(function(entries){
+      if(entries.some(e => e.isIntersecting)){ loadTypeformOnce(); io.disconnect(); }
+    }, { rootMargin: '400px 0px' });
+    io.observe(intake);
+  } else {
+    // Fallback: load after a short delay so it won't steal focus at T=0
+    setTimeout(loadTypeformOnce, 3000);
+  }
+})();
+</script>
+
 </body>
 </html>
