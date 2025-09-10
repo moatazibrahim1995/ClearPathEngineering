@@ -294,6 +294,7 @@
 
   <!-- Intake -->
 <!-- Intake / Estimator (Typeform) -->
+<!-- Intake / Estimator (Typeform) -->
 <section class="section" id="intake">
   <div class="container">
     <h2>Prefer to start with the quick estimator?</h2>
@@ -302,8 +303,8 @@
       <iframe
         id="typeform-embed"
         title="Clear Path quick estimator"
-        src=""                      <!-- leave blank initially -->
-        data-src="https://form.typeform.com/to/x28nkG0K"
+        src="about:blank"                         <!-- key change -->
+        data-src="https://form.typeform.com/to/x28nkG0K?typeform-medium=embed-snippet"
         width="100%" height="760" frameborder="0"
         allow="camera; microphone; autoplay; encrypted-media;"
         loading="lazy"
@@ -311,6 +312,7 @@
     </div>
   </div>
 </section>
+
 
 
   <!-- FAQ (visible, for FAQPage schema) -->
@@ -381,7 +383,7 @@
   <!-- FAQPage structured data -->
 <script>
 (function(){
-  // Avoid browser restoring a deep scroll on first load
+  // Prevent browser restoring deep scroll on first visit
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 
   var tf = document.getElementById('typeform-embed');
@@ -389,7 +391,7 @@
 
   function loadTypeformOnce(){
     if (tf.dataset.loaded) return;
-    var base = new URL(tf.dataset.src);
+    var base = new URL(tf.getAttribute('data-src'));
     var params = new URLSearchParams(location.search);
     ['utm_source','utm_medium','utm_campaign','utm_content','ref'].forEach(function(k){
       var v = params.get(k); if (v) base.searchParams.set(k, v);
@@ -398,12 +400,12 @@
     tf.dataset.loaded = '1';
   }
 
-  // Load on intent (clicking any link to #intake)
+  // Load on click of any #intake link
   document.querySelectorAll('a[href="#intake"]').forEach(function(a){
     a.addEventListener('click', loadTypeformOnce, { once:true });
   });
 
-  // Also load when the section is near the viewport (lazy)
+  // Lazy-load when near viewport
   var intake = document.getElementById('intake');
   if ('IntersectionObserver' in window && intake){
     var io = new IntersectionObserver(function(entries){
@@ -411,11 +413,12 @@
     }, { rootMargin: '400px 0px' });
     io.observe(intake);
   } else {
-    // Fallback: load after a short delay so it won't steal focus at T=0
+    // Fallback: load a bit later so it can't steal focus
     setTimeout(loadTypeformOnce, 3000);
   }
 })();
 </script>
+
 
 </body>
 </html>
