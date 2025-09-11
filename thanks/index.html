@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Thanks — Clear Path Engineering</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--ink:#0f172a;--muted:#475569;--line:#e2e8f0;--brand:#f1b800;--brand2:#2563eb;--max:860px}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui;background:#fff;color:var(--ink)}
+    .container{max-width:var(--max);margin:0 auto;padding:40px 22px}
+    h1{margin:0 0 10px;font-size:36px} p{color:var(--muted);margin:0 0 16px}
+    .card{border:1px solid var(--line);border-radius:14px;padding:18px}
+    .btn{display:inline-flex;gap:8px;align-items:center;padding:12px 16px;border-radius:999px;
+         background:var(--brand2);color:#fff;font-weight:700;text-decoration:none}
+    .muted{font-size:14px;color:var(--muted)}
+    .two{display:grid;grid-template-columns:1fr;gap:14px}
+  </style>
+
+  <!-- GA4 (already on your site; include if this page isn’t using your shared layout) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-668SCJR76D"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config','G-668SCJR76D');
+  </script>
+</head>
+<body>
+  <main class="container">
+    <div class="two">
+      <section class="card">
+        <h1>Thanks — we’ve got your details.</h1>
+        <p>Next step: book your strategy call. If your score is high, you’ll see the calendar below.</p>
+        <p class="muted">Didn’t mean to close the tab? We’ve also sent a confirmation to your email.</p>
+        <div id="actions" style="margin-top:10px">
+          <a id="bookBtn" class="btn" href="https://calendly.com/moataz-clearpathengineering/idea-to-product-strategy-60-min">Book 60-min call</a>
+        </div>
+      </section>
+
+      <section id="calWrap" class="card" style="display:none">
+        <div class="calendly-inline-widget"
+             data-url="https://calendly.com/moataz-clearpathengineering/idea-to-product-strategy-60-min"
+             style="min-width:320px;height:760px"></div>
+        <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    // Read ?score= from Typeform redirect and show inline Calendly for high intent
+    const qp = new URLSearchParams(location.search);
+    const score = parseInt(qp.get('score') || '0', 10);
+    if (score >= 75) { document.getElementById('calWrap').style.display = 'block'; }
+
+    // (Optional) Surface UTMs so you can see them in analytics/debug
+    ['utm_source','utm_medium','utm_campaign','utm_content'].forEach(k=>{
+      const v = qp.get(k); if (v) sessionStorage.setItem(k, v);
+    });
+  </script>
+</body>
+</html>
