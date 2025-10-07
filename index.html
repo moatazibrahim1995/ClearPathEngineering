@@ -1,437 +1,111 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Clear Path Engineering — Ship smarter hardware, sooner</title>
-  <meta name="description" content="Fractional hardware leadership for first-time founders and small teams. We turn sketches and partial CAD into supplier-ready packs, quotes, and clear go/no-go decisions.">
-
-  <!-- Canonical -->
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Supplier‑Ready in 21 Days — Clear Path Engineering</title>
+  <meta name="description" content="We turn partial CAD into a vendor‑ready pack, 2–3 quotes, and a clear go/no‑go — without burning months on the wrong prototype.">
   <link rel="canonical" href="https://www.clearpathengineering.ca/"/>
 
-  <!-- Favicons & app icons (your uploads in /assets) -->
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/IconOnly_Transparent_NoBuffer.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/IconOnly_Transparent_NoBuffer.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/IconOnly_Transparent_NoBuffer.png">
-  <link rel="manifest" href="/assets/site.webmanifest">
-  <meta name="theme-color" content="#2563eb">
+  <meta name="theme-color" content="#0f172a">
 
-  <!-- Social cards -->
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="Clear Path Engineering — Ship smarter hardware, sooner">
-  <meta property="og:description" content="Fractional hardware leadership for first-time founders and small teams. We turn sketches and partial CAD into supplier-ready packs, quotes, and clear go/no-go decisions.">
-  <meta property="og:url" content="https://www.clearpathengineering.ca/">
-  <meta property="og:image" content="https://www.clearpathengineering.ca/assets/FullLogo.jpg">
-  <meta property="og:site_name" content="Clear Path Engineering">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Clear Path Engineering — Ship smarter hardware, sooner">
-  <meta name="twitter:description" content="Fractional hardware leadership for first-time founders and small teams. We turn sketches and partial CAD into supplier-ready packs, quotes, and clear go/no-go decisions.">
-  <meta name="twitter:image" content="https://www.clearpathengineering.ca/assets/FullLogo.jpg">
-
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <!-- GA4 (replace G-XXXXXXXXXX) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-XXXXXXXXXX');
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    :root{
-      --bg:#ffffff; --ink:#0f172a; --muted:#475569; --line:#e2e8f0; --card:#ffffff;
-      --brand:#f1b800; --brand2:#2563eb; --ok:#16a34a; --warn:#f59e0b; --max:860px;
-      --radius:16px; --shadow:0 10px 30px rgba(2,6,23,.06);
-    }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink)}
-    a{color:var(--ink);text-decoration:none}
-    .container{max-width:var(--max);margin:0 auto;padding:0 22px}
-    .nav{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-    .nav-inner{display:flex;align-items:center;justify-content:space-between;height:66px}
-    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.1px}
-    .brand-mark{height:24px;width:auto;display:block}
-    .nav-links{display:flex;gap:18px;align-items:center}
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:46px;padding:0 18px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink);font-weight:700;box-shadow:var(--shadow);transition:.15s}
-    .btn:hover{transform:translateY(-1px)}
-    .btn.primary{background:var(--brand);border-color:transparent;color:#181818}
-    .btn.blue{background:var(--brand2);border-color:transparent;color:#fff}
-    .btn.link{border-color:transparent;box-shadow:none;background:transparent;color:var(--brand2)}
-    .hero{padding:56px 0 8px;border-bottom:1px solid var(--line)}
-    h1{margin:0 0 10px;font-size:44px;line-height:1.05}
-    .lead{color:var(--muted);font-size:19px;line-height:1.55;margin:0 0 18px}
-    .cta-row{display:flex;gap:10px;flex-wrap:wrap}
-    .meta{color:var(--muted);font-size:14px;margin-top:8px}
-    .strip{padding:18px 0;border-bottom:1px solid var(--line)}
-    .logos{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
-    .logos img{height:26px;width:auto;filter:none}
-    .pill{display:inline-flex;align-items:center;gap:8px;margin:6px 8px 0 0;padding:8px 12px;border-radius:999px;background:#f8fafc;border:1px solid var(--line);color:#0f172a;font-size:13px}
-    .section{padding:42px 0;border-bottom:1px solid var(--line)}
-    .section h2{margin:0 0 10px;font-size:30px}
-    .sub{color:var(--muted);margin:0 0 18px}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
-    .list{margin:8px 0 0; padding-left:18px}
-    .list li{margin:6px 0;color:var(--muted)}
-    .offer{display:grid;grid-template-columns:1fr;gap:14px}
-    .offer .card h3{margin:0 0 6px}
-    .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-    @media(max-width:840px){.two{grid-template-columns:1fr}}
-    .sticky-cta{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:50}
-    .sticky-cta .bar{display:flex;gap:10px;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);padding:10px;border-radius:999px}
-    footer{padding:28px 0}
-    .footer-top{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-    .footer-logo{height:28px;width:auto}
+    body{font-family:Inter,system-ui,sans-serif;margin:0;padding:0;color:#0f172a;background:#fff}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:900px;margin:0 auto;padding:0 20px}
+    .btn{display:inline-block;padding:10px 20px;border-radius:999px;font-weight:700;box-shadow:0 4px 12px rgba(0,0,0,.08);border:1px solid #e2e8f0;transition:.15s}
+    .btn.primary{background:#f1b800;color:#111;border:none}
+    .btn.accent{background:#2563eb;color:#fff;border:none}
+    .hero{padding:80px 0;border-bottom:1px solid #e2e8f0}
+    h1{font-size:44px;margin:0 0 10px}
+    p.lead{font-size:18px;color:#475569;margin:0 0 20px}
+    .cta-row{display:flex;flex-wrap:wrap;gap:10px}
+    section{padding:40px 0;border-bottom:1px solid #e2e8f0}
+    h2{font-size:30px;margin:0 0 10px}
+    .list{margin:10px 0 0;padding-left:20px;color:#475569}
+    .card{border:1px solid #e2e8f0;border-radius:16px;padding:20px;box-shadow:0 10px 30px rgba(2,6,23,.06)}
+    .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:820px){.two{grid-template-columns:1fr}}
   </style>
-
-  <!-- Structured Data: ProfessionalService (points logo to your full logo) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "name": "Clear Path Engineering",
-    "url": "https://www.clearpathengineering.ca/",
-    "description": "Fractional hardware leadership for first-time founders and small teams. We turn sketches and partial CAD into supplier-ready packs, quotes, and clear go/no-go decisions.",
-    "areaServed": ["CA","US"],
-    "founder": {"@type": "Person","name": "Moataz Ibrahim"},
-    "email": "info@clearpathengineering.ca",
-    "address": {"@type": "PostalAddress","addressRegion": "NS","addressCountry": "CA"},
-    "logo": "https://www.clearpathengineering.ca/assets/FullLogo.jpg",
-    "sameAs": ["https://www.linkedin.com/company/clear-path-engineering"]
-  }
-  </script>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-668SCJR76D"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-668SCJR76D');
-</script>
 </head>
 <body>
-  <!-- Nav -->
-<nav class="nav">
-  <div class="container nav-inner">
-    <a class="brand" href="/" aria-label="Clear Path Engineering home">
-      <img class="brand-mark" src="/assets/IconOnly_Transparent_NoBuffer.png" alt="" height="24" width="24">
-      <span>Clear Path Engineering</span>
-    </a>
-    <div class="nav-links" role="navigation" aria-label="Primary">
-      <a href="/dfm-review/">DFM review</a>
-      <a href="/rfq-pack/">RFQ pack</a>
-      <a href="/fractional-hardware-lead/">Fractional lead</a>
-      <a href="/blog/">Blog</a>
-      <a class="btn primary" href="#book">Book call</a>
+  <header class="hero">
+    <div class="container">
+      <h1>Supplier‑Ready in 21 Days.</h1>
+      <p class="lead">We turn partial CAD into a vendor‑ready pack, 2–3 quotes, and a clear go/no‑go — without burning months on the wrong prototype.</p>
+      <div class="cta-row">
+        <a class="btn primary" href="#book">Book a 15‑min Diagnostic</a>
+        <a class="btn accent" href="#sample">See a Sample Audit</a>
+      </div>
     </div>
-  </div>
-</nav>
-
-
-  <!-- HERO -->
-  <header class="hero container" id="top">
-    <h1>Stop burning months on the wrong prototype.</h1>
-    <p class="lead">I help first-time hardware founders turn sketches and partial CAD into supplier-ready packs, quotes, and clear go/no-go decisions—fast.</p>
-    <div class="cta-row">
-      <a class="btn primary" href="#book">Book your 60-min strategy call</a>
-      <a class="btn blue" href="#intake">2-min estimator & intake</a>
-    </div>
-    <p class="meta">Every month of delay = lost contribution you never get back. We buy your time back.</p>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-668SCJR76D"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-668SCJR76D');
-</script>
   </header>
 
-  <!-- Logos strip (added Engineers NS logo) -->
-  <div class="strip">
-    <div class="container logos">
-      <img src="/assets/Engineers_NS_colour.png" alt="Engineers Nova Scotia" height="26">
-      <span class="pill">Michelin North America</span>
-      <span class="pill">Protocase</span>
-      <span class="pill">Outdoor-Fit</span>
-      <span class="pill">Nova Scotia, Canada</span>
-    </div>
-  </div>
-
-  <!-- What you get -->
-  <section class="section">
-    <div class="container two">
+  <section id="get" class="container">
+    <div class="two">
       <div class="card">
-        <h2>If you feel behind schedule, you’re not alone.</h2>
-        <p class="sub">Suppliers won’t quote. CAD keeps changing. The clock is loud; cash is louder. You don’t need another prototype—you need the right decisions, in the right order.</p>
+        <h2>What you get</h2>
         <ul class="list">
-          <li><strong>Time:</strong> delays compound. Every slip pushes revenue out.</li>
-          <li><strong>Money:</strong> late fixes & tooling changes burn thousands.</li>
-          <li><strong>Focus:</strong> mis-scoped builds stall the whole team.</li>
+          <li>DFM + tolerance pass vendors respect</li>
+          <li>Supplier‑ready RFQ pack (drawings, BOM, specs)</li>
+          <li>2–3 quotes + Decision Brief (cost model, risks, next step)</li>
         </ul>
       </div>
       <div class="card">
-        <h2>What we do instead</h2>
+        <h2>Who it’s for</h2>
         <ul class="list">
-          <li>Lock the simplest viable path to parts</li>
-          <li>Clean DFM + tolerance scheme vendors respect</li>
-          <li>Supplier-ready RFQ pack + 2–3 quotes</li>
-          <li>Decisions over deliverables; speed over vanity</li>
+          <li>Founders/SMEs between prototype and first PO.</li>
+          <li>Need quotes, clarity, and a de‑risked path to production.</li>
         </ul>
       </div>
     </div>
   </section>
 
-  <!-- Offers -->
- <section class="section" id="offers">
-  <div class="container">
-    <h2>Choose your pace</h2>
-    <p class="sub">Pick speed or stewardship. Either way, we protect time and money.</p>
-    <div class="offer">
+  <section id="how" class="container">
+    <div class="two">
       <div class="card">
-        <h3>Application Sprint — <span style="color:var(--brand2)">48–72h</span></h3>
-        <p class="sub">Under a program deadline? We draft responses, compile materials, and ship a submission checklist. One review loop before submission.</p>
-        <p class="sub"><strong>Best for:</strong> founders racing funding/application cutoffs.</p>
-        <div class="cta-row">
-          <a class="btn" href="#book">Ask about the sprint</a>
-        </div>
+        <h2>How it works</h2>
+        <ol class="list">
+          <li>Diagnostic Call (15 min): current state + constraints.</li>
+          <li>Sprint (≤ 21 days): audit → redesign → RFQ pack → quotes.</li>
+          <li>Decision: go/no‑go with 30‑day recovery plan.</li>
+        </ol>
       </div>
-
       <div class="card">
-        <h3>Starter Build Plan — <span style="color:var(--brand2)">4 weeks, $5,000</span></h3>
+        <h2>Why it works</h2>
         <ul class="list">
-          <li>Week 1: Intake, risk map, one-page plan</li>
-          <li>Week 2: DFM review + tolerances (priority parts)</li>
-          <li>Week 3: RFQ pack + outreach to 2–3 suppliers</li>
-          <li>Week 4: Quote compare + go/no-go & next steps</li>
-        </ul>
-        <p class="sub"><strong>Best for:</strong> quotes & clarity before tooling/prototypes.</p>
-        <div class="cta-row">
-          <a class="btn" href="/dfm-review/">Learn about the DFM review</a>
-          <a class="btn" href="/rfq-pack/">Learn about the RFQ pack</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <h3>Fractional Hardware Lead — <span style="color:var(--brand2)">$5,000/mo, 6-month min</span></h3>
-        <ul class="list">
-          <li>Weekly leadership call + decision log</li>
-          <li>Roadmap + operating scoreboard</li>
-          <li>Supplier & quote management; light reviews</li>
-          <li>Investor-ready monthly update</li>
-        </ul>
-        <p class="sub"><strong>Best for:</strong> steady stewardship to first articles.</p>
-        <div class="cta-row">
-          <a class="btn blue" href="/fractional-hardware-lead/">See how the retainer works</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-  <!-- Results -->
-  <section class="section" id="results">
-    <div class="container">
-      <h2>Recent Wins:</h2>
-      <p class="sub">Prototype-stage founder building a modular plastic wash station. Deadline pressure. Confusion on wall thickness, hole sizes, and scope boundaries.</p>
-      <div class="two">
-        <div class="card">
-          <h3>Before</h3>
-          <ul class="list">
-            <li>Walls assumed ~20 mm; suppliers hesitant to quote</li>
-            <li>Depth/pitch undecided; geometry kept shifting</li>
-            <li>Program application looming; no clear checklist</li>
-            <li>Unclear what was included vs. change request</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>After</h3>
-          <ul class="list">
-            <li>Right-sized walls to 3–4 mm (DFM guidance)</li>
-            <li>Standardized hole diameters for insert compatibility</li>
-            <li>RFQ pack built; 2–3 suppliers engaged with clear tolerances</li>
-            <li>Application Sprint: responses drafted + submission checklist</li>
-            <li>Decision Log: depth/pitch gate; change control clarified</li>
-          </ul>
-          <p class="sub"><strong>Outcome:</strong> fewer redesign loops, credible quotes, and an on-time application—client confidence up, panic down.</p>
-        </div>
-      </div>
-      <div class="container" style="padding:0;margin-top:12px">
-        <div class="card">
-          <p class="sub"><strong>Client feedback:</strong> “I have no doubt you have the ethics and capacity to work with almost anybody.” — anonymized founder</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Mistakes -->
-  <section class="section" id="mistakes">
-    <div class="container two">
-      <div class="card">
-        <h2>Costly mistakes without expert guardrails</h2>
-        <ul class="list">
-          <li><strong>No draft, uneven walls (IM):</strong> sinks/warpage → re-tooling & weeks lost</li>
-          <li><strong>Undercuts by accident:</strong> surprise side-actions inflate tool cost</li>
-          <li><strong>Over-tight tolerances:</strong> quotes spike; parts still don’t fit</li>
-          <li><strong>No datum scheme:</strong> vendors can’t inspect; quality ping-pong</li>
-          <li><strong>Part count bloat:</strong> assembly takes forever; redesign late</li>
-          <li><strong>No supplier engaged:</strong> RFQ cycles stall; wrong assumptions linger</li>
-          <li><strong>Certs ignored (UL/FCC/CE):</strong> late test failures → redesign</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h2>How we prevent waste</h2>
-        <ul class="list">
-          <li>Early DFM + tolerance pass on priority parts</li>
-          <li>Deliberate parting lines, draft, radii review</li>
-          <li>Right-sized tolerances & finishes for cost/fit</li>
-          <li>DFA to reduce part count and fasteners</li>
-          <li>Supplier-ready RFQ pack; 2–3 quotes fast</li>
-          <li>Regulatory pre-check to avoid late surprises</li>
+          <li>Early design choices lock 70–80 % of cost.</li>
+          <li>Clean RFQ packs get quoted faster.</li>
+          <li>Bounded scope prevents scope creep.</li>
         </ul>
       </div>
     </div>
   </section>
 
-  <!-- Book -->
-  <section class="section" id="book">
-    <div class="container">
-      <div class="card" style="align-items:flex-start">
-        <h2 style="margin:0 0 8px">Book your 60-min strategy call</h2>
-        <p class="sub" style="margin:0 0 14px">We’ll map the simplest path, estimate ROI, and lock next steps.</p>
-        <div class="calendly-inline-widget" data-url="https://calendly.com/moataz-clearpathengineering/idea-to-product-strategy-60-min" style="min-width:320px;height:800px;"></div>
-        <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+  <section id="book" class="container">
+    <div class="card">
+      <h2>Book your 15‑min Diagnostic</h2>
+      <p>We’ll map the simplest path, estimate ROI, and lock next steps.</p>
+      <!-- Calendly inline widget -->
+      <div class="calendly-inline-widget" data-url="https://calendly.com/moataz-clearpathengineering/idea-to-product-strategy-60-min" style="min-width:320px;height:760px;"></div>
+      <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+
+      <!-- Typeform popup button -->
+      <div style="margin-top:20px;text-align:center">
+        <h3>Prefer to fill a quick intake first?</h3>
+        <button class="btn" data-tf-popup="YOUR_TYPEFORM_ID" data-tf-size="70" data-tf-medium="snippet">Open Project Intake</button>
+        <script src="//embed.typeform.com/next/embed.js"></script>
       </div>
     </div>
   </section>
 
- <!-- Intake / Estimator (Typeform) -->
-<!-- Intake / Estimator (Typeform) -->
-<section class="section" id="intake">
-  <div class="container">
-    <h2>Prefer to start with the quick estimator?</h2>
-    <p class="sub">2–3 minutes. We score delay risk from DFM signals; share unit economics and we’ll show a rough cost-of-delay.</p>
-
-    <!-- Empty shell; no iframe in HTML -->
-    <div id="typeform-shell" class="card"
-         style="height:760px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:transparent">
-      <button id="load-estimator" class="btn blue">Load estimator</button>
-      <noscript>Enable JavaScript to view the estimator.</noscript>
-    </div>
-  </div>
-</section>
-
-  <!-- FAQ (visible, for FAQPage schema) -->
-  <section class="section" id="faq">
-    <div class="container">
-      <h2>FAQ</h2>
-      <div class="card">
-        <h3>What do I get in the Starter Build Plan?</h3>
-        <p class="sub">A 4-week sprint to lock DFM, build an RFQ pack, engage 2–3 suppliers, compare quotes, and make go/no-go decisions.</p>
-        <h3>Do you build physical prototypes?</h3>
-        <p class="sub">We focus on design clarity and supplier-ready documentation. If a prototype is required, we’ll coordinate vendors; we don’t run in-house prototyping.</p>
-        <h3>How fast can I get quotes?</h3>
-        <p class="sub">Typically within 1–2 weeks after the RFQ pack is finalized, depending on supplier responsiveness and part complexity.</p>
-        <h3>Where do you work?</h3>
-        <p class="sub">We’re based in Nova Scotia and work remotely with founders across Canada and the U.S.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Sticky CTA -->
-  <div class="sticky-cta" aria-hidden="false">
-    <div class="bar">
-      <a class="btn primary" href="#book">Book call</a>
-      <a class="btn blue" href="#intake">Estimator</a>
-    </div>
-  </div>
-
-  <!-- Footer with full logo -->
-  <footer>
-    <div class="container" style="display:flex;flex-direction:column;gap:12px;border-top:1px solid var(--line);padding-top:18px">
-      <div class="footer-top">
-        <img class="footer-logo" src="/assets/FullLogo.jpg" alt="Clear Path Engineering">
-        <span>Clear Path Engineering</span>
-      </div>
-      <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px">
-        <div>© <span id="y"></span> Clear Path Engineering • Nova Scotia, Canada</div>
-        <div style="display:flex;gap:14px">
-  <a href="/dfm-review/">DFM review</a>
-  <a href="/rfq-pack/">RFQ pack</a>
-  <a href="/fractional-hardware-lead/">Fractional lead</a>
-  <a href="/blog/">Blog</a>
-  <a href="#offers">Offers</a>
-  <a href="#results">Results</a>
-  <a href="#mistakes">Avoid</a>
-  <a href="#book">Book</a>
-  <a href="#intake">Estimator</a>
-</div>
-
-      </div>
-    </div>
+  <footer class="container" style="padding:30px 0;text-align:center;color:#475569;font-size:14px">
+    © <script>document.write(new Date().getFullYear())</script> Clear Path Engineering — Nova Scotia, Canada
   </footer>
-
-  <script>document.getElementById('y').textContent=new Date().getFullYear()</script>
-
-  <script>
-(function(){
-  // Build the Typeform URL with any UTM tags
-  function buildUrl() {
-    var u = new URL("https://form.typeform.com/to/x28nkG0K");
-    var qs = new URLSearchParams(location.search);
-    ["utm_source","utm_medium","utm_campaign","utm_content","ref"].forEach(function(k){
-      var v = qs.get(k); if (v) u.searchParams.set(k, v);
-    });
-    // identify embed origin (optional but useful)
-    u.searchParams.set("typeform-medium","embed");
-    return u.toString();
-  }
-
-  // Create iframe only once
-  var shell = document.getElementById("typeform-shell");
-  if (!shell) return;
-  function inject() {
-    if (shell.dataset.loaded) return;
-    var ifr = document.createElement("iframe");
-    ifr.title = "Clear Path quick estimator";
-    ifr.src = buildUrl();           // nothing until we set it here
-    ifr.width = "100%";
-    ifr.height = "760";
-    ifr.frameBorder = "0";
-    ifr.allow = "camera; microphone; autoplay; encrypted-media;";
-    ifr.style.cssText = "border:0;border-radius:12px;background:transparent";
-    shell.innerHTML = "";           // remove button
-    shell.appendChild(ifr);
-    shell.dataset.loaded = "1";
-  }
-
-  // Click to load
-  var btn = document.getElementById("load-estimator");
-  if (btn) btn.addEventListener("click", inject);
-
-  // Load when user scrolls near the section (intent)
-  if ("IntersectionObserver" in window){
-    var io = new IntersectionObserver(function(es){
-      if (es.some(e => e.isIntersecting)) { inject(); io.disconnect(); }
-    }, { rootMargin: "400px 0px" });
-    io.observe(shell);
-  } else {
-    // Fallback: gentle delay so it won't steal focus
-    setTimeout(inject, 3000);
-  }
-
-  // If user clicks any “Estimator” link in the nav, load immediately
-  document.querySelectorAll('a[href="#intake"]').forEach(function(a){
-    a.addEventListener("click", inject, { once:true });
-  });
-})();
-</script>
-
-
 </body>
 </html>
